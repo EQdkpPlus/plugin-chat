@@ -1,0 +1,168 @@
+<style>
+.chatSidebar {
+	width: 300px;
+	display: table-cell;
+	vertical-align: top;
+}
+
+.chatContent {
+	display: table-cell;
+    vertical-align: top;
+    padding-right: 20px;
+}
+
+.chatSidebarAvatar {
+	float: left;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 52px;
+}
+
+.chatSidebarAvatar img {
+	max-height: 48px;
+}
+
+.chatSidebarAvatar i {
+	font-size: 48px;
+}
+
+.chatSidebar a {
+	display: block;
+	clear: both;
+}
+
+.chatSidebarTitle {
+	display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 122px;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.chatSidebarDate {
+	float: right;
+    font-size: 0.8em;
+    text-align: right;
+    width: 95px;
+}
+
+.chatSidebarLastMessage {
+	max-height: 32px;
+    width: 210px;
+}
+
+.chatSidebar li {
+	margin-bottom: 4px;
+}
+
+.chatBigContainer {
+    padding: 8px;
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+    widht: 100%;
+}
+
+.chatBigContainer .chatWindowContainer {
+	float: none;
+    height: auto;
+    margin-left: 0px;
+    width: 100%;
+}
+
+.chatBigContainer .chatWindow {
+	background-color: transparent;
+	border: none;
+    bottom: 0;
+    height: auto;
+    margin:0;
+    position: relative;
+    width: auto;
+}
+
+.chatBigContainer .chatWindowContent {
+	height: 500px;
+	overflow-y: auto;
+}
+
+.chatBigContainer .chatInput {
+	border-top: 1px solid #D0D0D0;
+    top: 6px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.chatSidebar .unread {
+	background-color: #fff8c0;
+}
+
+</style>
+
+<script>
+var chatMorePosts = {CHAT_MORE_POSTS};
+var chatOffset = 0;
+
+$(document).ready(function(){
+	$(".chatBigContainer .chatWindowContent").scrollTop($(".chatBigContainer .chatWindowContent")[0].scrollHeight);
+	
+	$(".chatBigContainer .chatWindowContent").on("scroll", function() {
+	    var pos = $('.chatBigContainer .chatWindowContent').scrollTop();
+	    if (pos == 0 && chatMorePosts) {
+	        chatOffset = chatOffset + 20;
+	        var height = $(".chatBigContainer .chatWindowContent")[0].scrollHeight;
+	        $.post(mmocms_root_path+ "plugins/chat/ajax.php"+mmocms_sid+"&loadOlderMessages", { key: '{CHAT_KEY}', offset: chatOffset}, function(data){
+	        	if (data.count > 0){
+	        		$(data.content).prependTo(".chatBigContainer .chatWindowContent");
+	        	}
+	        	if (data.count != 20){
+	        		chatMorePosts = false;
+	        	}
+	        	var new_height = $(".chatBigContainer .chatWindowContent")[0].scrollHeight;
+	        	$(".chatBigContainer .chatWindowContent").scrollTop(new_height-height);
+	        });
+	    }
+	})
+})
+</script>
+
+<div class="breadcrumb-container">
+	<ul class="breamcrumb">
+		<li><a href="{EQDKP_CONTROLLER_PATH}{SID}" title="{L_home}"><i class="icon-home"></i></a></li>
+		<li class="current"><a>Chat</a></li>
+	</ul>
+	<div class="clear"></div>
+</div>
+
+<div class="table">
+	<div class="tr">
+		
+		<section class="chatContent">
+			<div class="chatBigContainer">
+				<div data-user-count="3" data-chat-id="{CHAT_KEY}" class="chatWindowContainer chat-{CHAT_KEY}">
+					<div class="chatWindow active">
+						<div class="chatWindowContent">
+							<div class="chatMessages-{CHAT_KEY} bigScrollContainer">{CHAT_CONTENT}</div>
+						</div>
+						<div class="chatInput">
+							<textarea style="overflow: hidden; word-wrap: break-word; resize: none;" class="chatInputSubmit" id="chatInput-{CHAT_KEY}"></textarea>
+						</div>
+						<div class="clear"></div>
+						<div style="display:none;" class="chatLastMessage-{CHAT_KEY}">{CHAT_LAST_MESSAGE}</div>
+						<div style="display:none;" class="chatLastMessageByMe-{CHAT_KEY}">{CHAT_LASTBYME}</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		<aside class="chatSidebar">
+			<h2>Benutzer Online ({CHAT_ONLINE_COUNT}):</h2>
+			<ul>
+			<!-- BEGIN chat_online_row -->
+			{chat_online_row.USER}
+			<!-- END chat_online_row -->
+			</ul>
+		</aside>
+	</div>
+</div>
