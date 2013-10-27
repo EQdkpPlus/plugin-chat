@@ -66,7 +66,7 @@ if (!class_exists('chat_portal_hook'))
 			
 			$this->tpl->assign_block_vars("personal_area_addition", array(
 				"TEXT" => '<div class="chat-tooltip-container"><a href="'.register("routing")->build("chathistory").'">
-									<i class="fa fa-comments"></i>Chat
+									<i class="fa fa-comments"></i> Chat
 									</a> 
 									<div class="notification-tooltip-container">
 									<span class="notification-bubble-red chat-tooltip-trigger hand"></span>
