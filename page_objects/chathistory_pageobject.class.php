@@ -86,7 +86,7 @@ class chathistory_pageobject extends pageobject
 	  					$strAvatar = $this->pdh->geth('user', 'avatarimglink', array((int)$user_id));
 	  				}
 	  			} else {
-	  				$strAvatar = '<i class="icon-group icon-4x"></i>';
+	  				$strAvatar = '<i class="fa fa-group fa-4x"></i>';
 	  			}
 	  			
 	  			//Get Unread data

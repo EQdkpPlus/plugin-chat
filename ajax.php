@@ -435,7 +435,7 @@ class AjaxChat extends page_generic {
 					$strAvatar = $this->pdh->geth('user', 'avatarimglink', array((int)$user_id));
 				}
 			} else {
-				$strAvatar = '<i class="icon-group icon-4x"></i>';
+				$strAvatar = '<i class="fa fa-group fa-4x"></i>';
 			}
 			
 			$strOut .='<li class="chatTooltipRemove"><a href="'.$strLink.'">
@@ -450,7 +450,7 @@ class AjaxChat extends page_generic {
 				</div>
 				<div class="chatTooltipLastMessage">';
 				if (((int)$row['user_id'] == $this->user->id)){
-					$strOut .='<i class="icon-reply"></i>';
+					$strOut .='<i class="fa fa-reply"></i>';
 				}
 				$strOut .= $row['text'].'</div>
 				<div class="clear"></div>

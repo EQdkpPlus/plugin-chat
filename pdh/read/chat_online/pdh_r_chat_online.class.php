@@ -136,7 +136,7 @@ if (!class_exists('pdh_r_chat_online'))
     	
     	$html .= '<li><div onclick="window.location=\''.$this->routing->build("chat").'\'" class="hand">';
     		
-    	$html .= '<div class="chat_user_avatar"><i class="icon-group icon-large floatLeft"></i></div>';
+    	$html .= '<div class="chat_user_avatar"><i class="fa fa-group fa-lg floatLeft"></i></div>';
     	$html .= '<div class="chat_username">Gildenchat</div>';
 
     	$html .= '</div></li>';
@@ -147,10 +147,10 @@ if (!class_exists('pdh_r_chat_online'))
     		$strTitle = $this->pdh->get("chat_conversations", "title", array($key));
     		$html .= '<li><div onclick="EQdkpChat.openNewChat(\''.$key.'\', \''.$strTitle.'\', new Array(\''.implode("','",$arrUser).'\'));" class="hand">';
     		
-    		$html .= '<div class="chat_user_avatar"><i class="icon-group icon-large floatLeft"></i></div>';
+    		$html .= '<div class="chat_user_avatar"><i class="fa fa-group fa-lg floatLeft"></i></div>';
     		$html .= '<div class="chat_username">'.$strTitle.'</div>';
 
-    		$html .= '</div><div class="chat_last_online"><i class="icon-archive hand" onclick="EQdkpChat.archiveGroupConversation(this, \''.$key.'\')"></i></div>';
+    		$html .= '</div><div class="chat_last_online"><i class="fa fa-archive hand" onclick="EQdkpChat.archiveGroupConversation(this, \''.$key.'\')"></i></div>';
 
     		$html .= '</li>';
     	}

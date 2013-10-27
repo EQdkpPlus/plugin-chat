@@ -176,7 +176,7 @@ var EQdkpChat = new function(){
 					var usercount = $(".chat-"+key).attr("data-user-count");
 					
 					if(usercount =="2" && $(".chatLastMessageByMe-"+key).html() == "1"){
-						$(".chatMessages-"+key).append('<div class="chatReed"><i class="icon-ok"></i> Gelesen</div>');
+						$(".chatMessages-"+key).append('<div class="chatReed"><i class="fa fa-check"></i> Gelesen</div>');
 						$(".chat-"+key+" .chatWindowContent").scrollTop($(".chat-"+key+" .chatWindowContent")[0].scrollHeight);
 					}
 				});
@@ -305,7 +305,7 @@ var EQdkpChat = new function(){
             if (e.which == 13 && value != "") {
             	if (value != "\n"){
             		$.post(mmocms_root_path+ "plugins/chat/ajax.php"+mmocms_sid+"&save", { key: key, txt: value });
-            		var html = '<div class="chatPost chatTmpPost"><div class="chatTime">jetzt</div><div class="chatAvatar"><i class="icon-spin icon-spinner icon-large"></i></div><div class="chatMessage">'+value+'</div><div class="clear"></div></div>';
+            		var html = '<div class="chatPost chatTmpPost"><div class="chatTime">jetzt</div><div class="chatAvatar"><i class="fa-spin fa fa-spinner fa-lg"></i></div><div class="chatMessage">'+value+'</div><div class="clear"></div></div>';
             		$(".chatMessages-"+key).append(html);
             		$(".chat-"+key).find(".chatReed").remove();
             		$(".chat-"+key+" .chatWindowContent").scrollTop($(".chat-"+key+" .chatWindowContent")[0].scrollHeight);
@@ -382,7 +382,7 @@ var EQdkpChat = new function(){
 	
 	function openChatWindow(key, title, count){
 		if ($("#chatWindowList").find(".chat-"+key).length == 0){
-			var html = '<div class="chatWindowContainer chat-'+key+'" data-chat-id="'+key+'" data-user-count="'+count+'" data-opened="1"><div class="chatWindow"><div class="chatWindowHeader"><span>'+title+'</span><i class="icon-remove floatRight hand" onclick="EQdkpChat.closeConversation(\''+key+'\')" style="margin-right: -5px; margin-left: 5px;"></i><i class="icon-plus floatRight hand" onclick="EQdkpChat.addUser(\''+key+'\')"></i></div><div class="chatWindowAddUser" style="display:none;"><input type="text" class="demo-input-local" name="blah" /><button type="button" onclick="EQdkpChat.addUserSubmit(\''+key+'\');"><i class="icon-ok"></i> Absenden</button></div><div class="chatWindowContent"><span class="chatMessages-'+key+'"></span><div class="clear"></div></div><div class="chatInput"><textarea id="chatInput-'+key+'" class="chatInputSubmit" style="overflow: hidden; word-wrap: break-word; resize: none;"></textarea></div><div class="clear"></div><div class="chatLastMessage-'+key+'" style="display:none;">0</div><div class="chatLastMessageByMe-'+key+'" style="display:none;">0</div></div></div>';				
+			var html = '<div class="chatWindowContainer chat-'+key+'" data-chat-id="'+key+'" data-user-count="'+count+'" data-opened="1"><div class="chatWindow"><div class="chatWindowHeader"><span>'+title+'</span><i class="fa fa-times floatRight hand" onclick="EQdkpChat.closeConversation(\''+key+'\')" style="margin-right: -5px; margin-left: 5px;"></i><i class="fa fa-plus floatRight hand" onclick="EQdkpChat.addUser(\''+key+'\')"></i></div><div class="chatWindowAddUser" style="display:none;"><input type="text" class="demo-input-local" name="blah" /><button type="button" onclick="EQdkpChat.addUserSubmit(\''+key+'\');"><i class="fa fa-check"></i> Absenden</button></div><div class="chatWindowContent"><span class="chatMessages-'+key+'"></span><div class="clear"></div></div><div class="chatInput"><textarea id="chatInput-'+key+'" class="chatInputSubmit" style="overflow: hidden; word-wrap: break-word; resize: none;"></textarea></div><div class="clear"></div><div class="chatLastMessage-'+key+'" style="display:none;">0</div><div class="chatLastMessageByMe-'+key+'" style="display:none;">0</div></div></div>';				
 			$("#chatWindowList").append(html);
 		}
 	}

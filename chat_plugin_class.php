@@ -56,7 +56,7 @@ class chat extends plugin_generic
       'code'              => 'chat',
       'path'              => 'chat',
       'template_path'     => 'plugins/chat/templates/',
-      'icon'              => 'icon-comments',
+      'icon'              => 'fa-comments',
       'version'           => $this->version,
       'author'            => $this->copyright,
       'description'       => $this->user->lang('chat_short_desc'),
@@ -157,12 +157,12 @@ class chat extends plugin_generic
   {
     $admin_menu = array (array(
         'name' => $this->user->lang('chat'),
-        'icon' => 'icon-comments',
+        'icon' => 'fa-comments',
         1 => array (
           'link'  => 'plugins/chat/admin/settings.php'.$this->SID,
           'text'  => $this->user->lang('settings'),
           'check' => 'a_chat_settings',
-          'icon'  => 'icon-wrench'
+          'icon'  => 'fa-wrench'
         ),
     ));
 
@@ -172,7 +172,7 @@ class chat extends plugin_generic
   private function usersettings(){
 	$settings = array(
 		'chat' => array(
-			'icon' => 'icon-comments',
+			'icon' => 'fa-comments',
 		
 		'gr_send_notification_mails'	=> array(
 			'fieldtype'	=> 'checkbox',
