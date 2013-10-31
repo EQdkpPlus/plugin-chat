@@ -51,7 +51,7 @@ var EQdkpChat = new function(){
 			$("#chatOnlineMinimized").hide();
 			$("#chatOnlineMaximized").show();
 		});
-		$("#chatOnlineMaximized .icon-remove").on("click", function(){
+		$("#chatOnlineMaximized .fa-times").on("click", function(){
 			$("#chatOnlineMinimized").show();
 			$("#chatOnlineMaximized").hide();
 		});
