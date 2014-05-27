@@ -28,16 +28,6 @@ if (!class_exists('pdh_w_chat_conversation_lastvisit'))
 {
   class pdh_w_chat_conversation_lastvisit extends pdh_w_generic
   {
-    /**
-     * __dependencies
-     * Get module dependencies
-     */
-    public static function __shortcuts()
-    {
-      $shortcuts = array('db', 'pdh', 'time', 'user');
-      return array_merge(parent::$shortcuts, $shortcuts);
-    }
-    
     
     public function setLastVisit($strConversationKey){
     	$objQuery = $this->db->prepare("REPLACE INTO __chat_conversation_lastvisit :p")->set(array(

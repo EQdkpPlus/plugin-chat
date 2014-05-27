@@ -19,15 +19,6 @@
 // EQdkp required files/vars
 class chat_pageobject extends pageobject
 {
-  /**
-   * __dependencies
-   * Get module dependencies
-   */
-  public static function __shortcuts()
-  {
-    $shortcuts = array('pm', 'user', 'core', 'in', 'pdh', 'time', 'tpl', 'html', 'routing', 'db');
-   	return array_merge(parent::__shortcuts(), $shortcuts);
-  }  
   
   private $data = array();
 

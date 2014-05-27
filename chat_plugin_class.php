@@ -28,15 +28,6 @@ if (!defined('EQDKP_INC'))
   +--------------------------------------------------------------------------*/
 class chat extends plugin_generic
 {
-  /**
-   * __dependencies
-   * Get module dependencies
-   */
-  public static function __shortcuts()
-  {
-    $shortcuts = array('user', 'config', 'pdc', 'pfh', 'pdh', 'routing');
-    return array_merge(parent::$shortcuts, $shortcuts);
-  }
 
   public $version    = '0.1.0';
   public $build      = '';

@@ -28,15 +28,6 @@ if (!class_exists('pdh_r_chat_conversations'))
 {
   class pdh_r_chat_conversations extends pdh_r_generic
   {
-    /**
-     * __dependencies
-     * Get module dependencies
-     */
-    public static function __shortcuts()
-    {
-      $shortcuts = array('pdc', 'db', 'pdh', 'config', 'bbcode', 'time', 'user');
-      return array_merge(parent::$shortcuts, $shortcuts);
-    }
 
     /**
      * Data array loaded by initialize

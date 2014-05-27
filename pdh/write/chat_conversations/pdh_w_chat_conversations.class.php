@@ -28,15 +28,6 @@ if (!class_exists('pdh_w_chat_conversations'))
 {
   class pdh_w_chat_conversations extends pdh_w_generic
   {
-    /**
-     * __dependencies
-     * Get module dependencies
-     */
-    public static function __shortcuts()
-    {
-      $shortcuts = array('db', 'pdh', 'time', 'user');
-      return array_merge(parent::$shortcuts, $shortcuts);
-    }
     
     public function add($strConversationKey, $arrUser, $strTitle=''){
     	$objQuery = $this->db->prepare("INSERT INTO __chat_conversations :p")->set(array(

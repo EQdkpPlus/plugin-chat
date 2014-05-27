@@ -28,15 +28,6 @@ if (!class_exists('pdh_w_chat_messages'))
 {
   class pdh_w_chat_messages extends pdh_w_generic
   {
-    /**
-     * __dependencies
-     * Get module dependencies
-     */
-    public static function __shortcuts()
-    {
-      $shortcuts = array('db', 'pdh', 'time', 'user');
-      return array_merge(parent::$shortcuts, $shortcuts);
-    }
     
     public function addMessage($strConversationKey, $strText){
     	$strText = substr($strText, 0, -1);
