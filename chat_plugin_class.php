@@ -146,6 +146,8 @@ class chat extends plugin_generic
     */
   private function gen_admin_menu()
   {
+  	return array();
+  	
     $admin_menu = array (array(
         'name' => $this->user->lang('chat'),
         'icon' => 'fa-comments',
