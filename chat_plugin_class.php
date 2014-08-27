@@ -33,6 +33,8 @@ class chat extends plugin_generic
   public $build      = '';
   public $copyright  = 'GodMod';
   public $vstatus    = 'Alpha';
+  
+  protected static $apiLevel = 20;
 
   /**
     * Constructor
