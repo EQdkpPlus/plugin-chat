@@ -216,7 +216,7 @@ class AjaxChat extends page_generic {
 		$arrReed = array();
 		if (count($arrOpen)){
 			$objQuery = $this->db->prepare("SELECT m1.*
-	FROM eqdkp20_chat_messages m1 LEFT JOIN eqdkp20_chat_messages m2
+	FROM __chat_messages m1 LEFT JOIN __chat_messages m2
 	 ON (m1.conversation_key  = m2.conversation_key  AND m1.id < m2.id AND m1.user_id=m2.user_id)
 	WHERE m2.id IS NULL AND m1.user_id=? AND m1.conversation_key :in")->in($arrOpen)->execute($this->user->id);
 			if ($objQuery){
@@ -380,7 +380,7 @@ class AjaxChat extends page_generic {
 		if (count($arrMyConversations)){
 			//Get latest Messages
 			$objQuery = $this->db->prepare("SELECT m1.*
-		FROM eqdkp20_chat_messages m1 LEFT JOIN eqdkp20_chat_messages m2
+		FROM __chat_messages m1 LEFT JOIN __chat_messages m2
 		 ON (m1.conversation_key  = m2.conversation_key  AND m1.id < m2.id)
 		WHERE m2.id IS NULL AND m1.conversation_key :in ORDER BY date DESC")->in($arrMyConversations)->execute();
 						

@@ -85,7 +85,7 @@ class chat_pageobject extends pageobject
   	
   	// read all chat_online entries from db
   	$sql = 'SELECT s.session_user_id, s.session_current
-                FROM eqdkp20_sessions s
+                FROM __sessions s
       			WHERE s.session_user_id != -1
                 GROUP BY s.session_user_id
                 ORDER BY s.session_current DESC';
