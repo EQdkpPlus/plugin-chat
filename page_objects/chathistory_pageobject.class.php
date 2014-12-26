@@ -53,7 +53,7 @@ class chathistory_pageobject extends pageobject
   	if (count($arrMyConversations)){
 	  	//Get latest Messages
 	  	$objQuery = $this->db->prepare("SELECT m1.*
-		FROM eqdkp20_chat_messages m1 LEFT JOIN eqdkp20_chat_messages m2
+		FROM __chat_messages m1 LEFT JOIN __chat_messages m2
 		 ON (m1.conversation_key  = m2.conversation_key  AND m1.id < m2.id)
 		WHERE m2.id IS NULL AND m1.conversation_key :in ORDER BY date DESC")->in($arrMyConversations)->execute();
 		
@@ -149,10 +149,11 @@ class chathistory_pageobject extends pageobject
   		));
   	}
   	
+  	$strChatTitle = $this->pdh->get("chat_conversations", "title", array($firstKey));
   	$this->tpl->assign_vars(array(
   		'CHAT_MORE_POSTS'	=> ($rows == 20) ? 'true' : 'false',
   		'CHAT_KEY'			=> $firstKey,
-  		'CHAT_TITLE'		=> $this->pdh->get("chat_conversations", "title", array($firstKey)),
+  		'CHAT_TITLE'		=> (strlen($strChatTitle)) ? $strChatTitle : " - ",
   		'CHAT_COUNT'		=> count($this->pdh->get("chat_conversations", "user", array($firstKey))),
   	));
   	

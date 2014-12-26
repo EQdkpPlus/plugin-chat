@@ -104,6 +104,7 @@
 	max-height: 400px;
 	overflow-y: auto;
 	padding-right: 10px;
+	color: #000;
 }
 					
 .chat_user_avatar img, .chatAvatar img {
