@@ -51,6 +51,7 @@
 .chatSidebarLastMessage {
 	max-height: 32px;
     width: 210px;
+    overflow: hidden;
 }
 
 .chatSidebar li {
@@ -130,7 +131,7 @@ $(document).ready(function(){
 <div class="breadcrumb-container">
 	<ul class="breamcrumb">
 		<li><a href="{EQDKP_CONTROLLER_PATH}{SID}" title="{L_home}"><i class="fa fa-home"></i></a></li>
-		<li class="current"><a href="{EQDKP_CONTROLLER_PATH}Chat{SEO_EXTENSION}{SID}">Chat</a></li>
+		<li class="current"><a href="{EQDKP_CONTROLLER_PATH}Chat{SEO_EXTENSION}{SID}">{L_chat}</a></li>
 		<li class="current"><a>{CHAT_TITLE}</a></li>
 	</ul>
 	<div class="clear"></div>
@@ -139,7 +140,7 @@ $(document).ready(function(){
 <div class="table">
 	<div class="tr">
 		<aside class="chatSidebar">
-			<h2>Alle Konversationen</h2>
+			<h2>{L_chat_all_conversations}</h2>
 			<ul>
 			<!-- BEGIN chat_conversation_row -->
 			<li class="<!-- IF chat_conversation_row.KEY == CHAT_KEY -->row1<!-- ENDIF --> <!-- IF chat_conversation_row.S_UNREAD -->unread<!-- ENDIF -->">
@@ -167,7 +168,7 @@ $(document).ready(function(){
 		
 		<section class="chatContent">
 			<div class="contentHeader">
-				<h1 class="contentTitle">Konversation mit "{CHAT_TITLE}"</h1>
+				<h1 class="contentTitle">{L_chat_conversation_with} "{CHAT_TITLE}"</h1>
 			</div>
 			<div class="chatBigContainer">
 				<div data-user-count="{CHAT_COUNT}" data-chat-id="{CHAT_KEY}" class="chatWindowContainer chat-{CHAT_KEY}">

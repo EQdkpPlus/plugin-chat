@@ -149,6 +149,7 @@ if (!class_exists('pdh_r_chat_messages'))
 							'text'		=> $row['text'],
 							'reed'		=> 0,
 							'avatar'	=> $this->pdh->geth('user', 'avatarimglink', array((int)$row['user_id'])),
+							'profile'	=> $this->routing->build('user', $this->pdh->get('user', 'name', array((int)$row['user_id'])), 'u'.$row['user_id']),
 							'date'		=> $this->time->user_date((int)$row['date'], true),
 							'timestamp'	=> (int)$row['date'],
 					);
@@ -172,6 +173,7 @@ if (!class_exists('pdh_r_chat_messages'))
 								'text'		=> $row['text'],
 								'reed'		=> 1,
 								'avatar'	=> $this->pdh->geth('user', 'avatarimglink', array((int)$row['user_id'])),
+								'profile'	=> $this->routing->build('user', $this->pdh->get('user', 'name', array((int)$row['user_id'])), 'u'.$row['user_id']),
 								'date'		=> $this->time->user_date((int)$row['date'], true),
 								'timestamp'	=> (int)$row['date'],
 						);
@@ -195,6 +197,7 @@ if (!class_exists('pdh_r_chat_messages'))
 						'text'		=> $row['text'],
 						'reed'		=> ((int)$row['user_id'] == $this->user->id) ? 1 : (int)$row['reed'],
 						'avatar'	=> $this->pdh->geth('user', 'avatarimglink', array((int)$row['user_id'])),
+						'profile'	=> $this->routing->build('user', $this->pdh->get('user', 'name', array((int)$row['user_id'])), 'u'.$row['user_id']),
 						'date'		=> $this->time->user_date((int)$row['date'], true),
 						'timestamp'	=> (int)$row['date'],
 					);
@@ -217,6 +220,7 @@ if (!class_exists('pdh_r_chat_messages'))
 								'text'		=> $row['text'],
 								'reed'		=> ((int)$row['user_id'] == $this->user->id) ? 1 : (int)$row['reed'],
 								'avatar'	=> $this->pdh->geth('user', 'avatarimglink', array((int)$row['user_id'])),
+								'profile'	=> $this->routing->build('user', $this->pdh->get('user', 'name', array((int)$row['user_id'])), 'u'.$row['user_id']),
 								'date'		=> $this->time->user_date((int)$row['date'], true),
 								'timestamp'	=> (int)$row['date'],
 						);

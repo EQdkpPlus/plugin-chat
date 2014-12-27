@@ -176,7 +176,7 @@ var EQdkpChat = new function(){
 					var usercount = $(".chat-"+key).attr("data-user-count");
 					
 					if(usercount =="2" && $(".chatLastMessageByMe-"+key).html() == "1"){
-						$(".chatMessages-"+key).append('<div class="chatReed"><i class="fa fa-check"></i> Gelesen</div>');
+						$(".chatMessages-"+key).append('<div class="chatReed"><i class="fa fa-check"></i> Read</div>');
 						$(".chat-"+key+" .chatWindowContent").scrollTop($(".chat-"+key+" .chatWindowContent")[0].scrollHeight);
 					}
 				});
@@ -210,7 +210,7 @@ var EQdkpChat = new function(){
 					} else {
 						var newpost = "";								
 					}
-					var html = '<div class="chatPost'+newpost+'" data-post-id="'+v.id+'"><div class="chatTime">'+v.date+'</div><div class="chatAvatar" title="'+v.username+'">'+v.avatar+'</div><div class="chatMessage">'+v.text+'</div><div class="clear"></div></div>';
+					var html = '<div class="chatPost'+newpost+'" data-post-id="'+v.id+'"><div class="chatTime">'+v.date+'</div><div class="chatAvatar" title="'+v.username+'"><a href="'+v.profile+'">'+v.avatar+'</a></div><div class="chatMessage">'+v.text+'</div><div class="clear"></div></div>';
 					$(".chatContainer .chatMessages-"+key).append(html);
 				}
 				
@@ -222,7 +222,7 @@ var EQdkpChat = new function(){
 					} else {
 						var newpost = "";								
 					}
-					var html = '<div class="chatPost'+newpost+'" data-post-id="'+v.id+'"><div class="chatTime">'+v.date+'</div><div class="chatAvatar" title="'+v.username+'">'+v.avatar+'</div><div class="chatMessage">'+v.text+'</div><div class="clear"></div></div>';
+					var html = '<div class="chatPost'+newpost+'" data-post-id="'+v.id+'"><div class="chatTime">'+v.date+'</div><div class="chatAvatar" title="'+v.username+'"><a href="'+v.profile+'">'+v.avatar+'</a></div><div class="chatMessage">'+v.text+'</div><div class="clear"></div></div>';
 					$(".chatBigContainer .chatMessages-"+key).append(html);
 				}
 			});						
@@ -305,7 +305,7 @@ var EQdkpChat = new function(){
             if (e.which == 13 && value != "") {
             	if (value != "\n"){
             		$.post(mmocms_root_path+ "plugins/chat/ajax.php"+mmocms_sid+"&save", { key: key, txt: value });
-            		var html = '<div class="chatPost chatTmpPost"><div class="chatTime">jetzt</div><div class="chatAvatar"><i class="fa-spin fa fa-spinner fa-lg"></i></div><div class="chatMessage">'+value+'</div><div class="clear"></div></div>';
+            		var html = '<div class="chatPost chatTmpPost"><div class="chatTime">now</div><div class="chatAvatar"><i class="fa-spin fa fa-spinner fa-lg"></i></div><div class="chatMessage">'+value+'</div><div class="clear"></div></div>';
             		$(".chatMessages-"+key).append(html);
             		$(".chat-"+key).find(".chatReed").remove();
             		$(".chat-"+key+" .chatWindowContent").scrollTop($(".chat-"+key+" .chatWindowContent")[0].scrollHeight);

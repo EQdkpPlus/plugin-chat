@@ -64,14 +64,14 @@ if (!class_exists('chat_portal_hook'))
 			
 			$this->tpl->assign_block_vars("personal_area_addition", array(
 				"TEXT" => '<div class="chat-tooltip-container"><a href="'.register("routing")->build("chathistory").'">
-									<i class="fa fa-comments"></i> Chat
+									<i class="fa fa-comments fa-lg"></i> '.$this->user->lang('chat').'
 									</a> 
 									<div class="notification-tooltip-container">
-									<span class="notification-bubble-red chat-tooltip-trigger hand"></span>
+									<span class="notification-bubble-green chat-tooltip-trigger hand"></span>
 									<ul class="dropdown-menu chat-tooltip" role="menu" id="chat-tooltip">
 										<li class="chatTooltipUnread"><div style="text-align:center;"><i class="fa-spin fa fa-spinner fa-lg"></i></div></li>
 										<li class="tooltip-divider"></li>
-										<li><a href="'.register("routing")->build("chathistory").'">Alle Konversationen</a></li>
+										<li><a href="'.register("routing")->build("chathistory").'">'.$this->user->lang('chat_all_conversations').'</a></li>
 									</ul>
 								</div>
 							</div>',
@@ -80,12 +80,12 @@ if (!class_exists('chat_portal_hook'))
 			$this->tpl->staticHTML('<div class="chatContainer">
 										<div id="chatMenu" class="chatFloat">
 											<div id="chatOnlineMinimized" class="chatWindowMin">
-												<i class="fa fa-comments"></i> Chat (<span class="chatOnlineCount">0</span>)
+												<i class="fa fa-comments"></i> '.$this->user->lang('chat').' (<span class="chatOnlineCount">0</span>)
 											</div>
 											<div id="chatOnlineMaximized" class="chatWindowContainer" style="display:none;">
 												<div class="chatWindowMenu">
 													<div class="chatWindowHeader2">
-														<i class="fa fa-comments"></i> Chat <i class="fa fa-times floatRight hand"></i>
+														<i class="fa fa-comments fa-lg"></i> Chat <i class="fa fa-times floatRight hand"></i>
 													</div>
 													<div class="chatWindowContent">
 														<div class="chatOnlineList"></div>
@@ -93,7 +93,7 @@ if (!class_exists('chat_portal_hook'))
 													</div>
 													<div class="clear"></div>
 													<div class="chatInput">
-														<input type="text" id="chatOnlineSearch" placeholder="Benutzer filtern" />
+														<input type="text" id="chatOnlineSearch" placeholder="'.$this->user->lang('chat_filter_user').'" />
 													</div>
 												</div>
 											</div>

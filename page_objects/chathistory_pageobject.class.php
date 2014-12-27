@@ -134,7 +134,7 @@ class chathistory_pageobject extends pageobject
 				$strUsername = $this->pdh->get('user', 'name', array((int)$row['user_id']));
 				$arrHTML[] = '<div class="chatPost'.((!$reed) ? ' chatNewPost' : '').'" data-post-id="'.(int)$row['id'].'">
   								<div class="chatTime">'.$this->time->user_date((int)$row['date'], true).'</div>
-  								<div class="chatAvatar" title="'.$strUsername.'">'.$strAvatar.'</div>
+  								<div class="chatAvatar" title="'.$strUsername.'"><a href="'.$this->routing->build('user', $strUsername, 'u'.$row['user_id']).'">'.$strAvatar.'</a></div>
   								<div class="chatMessage">'.$row['text'].'</div><div class="clear"></div>
   							</div>';
 			}
@@ -143,7 +143,7 @@ class chathistory_pageobject extends pageobject
 		$arrHTML = array_reverse($arrHTML);
   		$this->tpl->assign_vars(array(
   				"CHAT_CONTENT"		=> implode("", $arrHTML),
-  				"CHAT_LAST_MESSAGE" => $lastElement['date'],
+  				"CHAT_LAST_MESSAGE" => cut_text($lastElement['date'], 50),
   				"CHAT_LASTBYME"		=> ((int)$lastElement['user_id'] == $this->user->id) ? 1 : 0,
   				
   		));
@@ -161,7 +161,7 @@ class chathistory_pageobject extends pageobject
 	
     // -- EQDKP ---------------------------------------------------------------
     $this->core->set_vars(array (
-      'page_title'    => $this->user->lang('gr_add'),
+      'page_title'    => $this->user->lang('chat_conversation'),
       'template_path' => $this->pm->get_data('chat', 'template_path'),
       'template_file' => 'chathistory.html',
       'display'       => true

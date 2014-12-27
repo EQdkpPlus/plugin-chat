@@ -29,7 +29,13 @@ $lang = array(
   'chat_long_desc'          => 'Chatte mit den anderen Benutzern, einzeln als auch in Gruppen',
   
   'chat_view'				=> 'Chatten',
-  
+  'chat_guildchat'			=> 'Gildenchat',
+  'chat_filter_user'		=> 'Benutzer filtern',
+  'chat_all_conversations'	=> 'Alle Konversationen',
+	'chat_conversation_with'	=> 'Konversation mit',
+	'chat_user_online'			=> 'Benutzer online',
+	'chat_conversation'		=> 'Konversation',
+	'chat_no_unread'		=> 'Keine ungelesenen Nachrichten',
  );
 
 ?>

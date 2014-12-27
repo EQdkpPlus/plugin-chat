@@ -64,7 +64,7 @@ class chat_pageobject extends pageobject
 				$strUsername = $this->pdh->get('user', 'name', array((int)$row['user_id']));
 				$arrHTML[] = '<div class="chatPost'.((!$reed) ? ' chatNewPost' : '').'" data-post-id="'.(int)$row['id'].'">
   								<div class="chatTime">'.$this->time->user_date((int)$row['date'], true).'</div>
-  								<div class="chatAvatar" title="'.$strUsername.'">'.$strAvatar.'</div>
+  								<div class="chatAvatar" title="'.$strUsername.'"><a href="'.$this->routing->build('user', $strUsername, 'u'.$row['user_id']).'">'.$strAvatar.'</a></div>
   								<div class="chatMessage">'.$row['text'].'</div><div class="clear"></div>
   							</div>';
 			}
@@ -125,7 +125,7 @@ class chat_pageobject extends pageobject
 	
     // -- EQDKP ---------------------------------------------------------------
     $this->core->set_vars(array (
-      'page_title'    => $this->user->lang('gr_add'),
+      'page_title'    => $this->user->lang('chat_guildchat'),
       'template_path' => $this->pm->get_data('chat', 'template_path'),
       'template_file' => 'chat.html',
       'display'       => true

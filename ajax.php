@@ -137,7 +137,7 @@ class AjaxChat extends page_generic {
 			if ($strKey != "guildchat"){
 				$arrUser = $this->pdh->get("chat_conversations", "user", array($strKey));
 				foreach($arrUser as $user_id){
-					if ($user_id == $this->user->id) continue;
+					if ($user_id === $this->user->id) continue;
 					if (!$this->pdh->get('chat_open_conversations', 'is_open', array($user_id, $strKey))){
 						$this->pdh->put("chat_open_conversations", "openConversation", array($strKey, $user_id));
 					}
@@ -190,6 +190,7 @@ class AjaxChat extends page_generic {
 						'text'		=> $row['text'],
 						'reed'		=> $reed,
 						'avatar'	=> $this->pdh->geth('user', 'avatarimglink', array((int)$row['user_id'])),
+						'profile'	=> $this->routing->build('user', $this->pdh->get('user', 'name', array((int)$row['user_id'])), 'u'.$row['user_id']),
 						'date'		=> $this->time->user_date((int)$row['date'], true),
 						'timestamp'	=> (int)$row['date'],
 					);
@@ -352,7 +353,7 @@ class AjaxChat extends page_generic {
 				$strUsername = $this->pdh->get('user', 'name', array((int)$row['user_id']));
 				$arrHTML[] = '<div class="chatPost'.((!$reed) ? ' chatNewPost' : '').'" data-post-id="'.(int)$row['id'].'">
   								<div class="chatTime">'.$this->time->user_date((int)$row['date'], true).'</div>
-  								<div class="chatAvatar" title="'.$strUsername.'">'.$strAvatar.'</div>
+  								<div class="chatAvatar" title="'.$strUsername.'"><a href="'.$this->routing->build('user', $strUsername, 'u'.$row['user_id']).'">'.$strAvatar.'</a></div>
   								<div class="chatMessage">'.$row['text'].'</div><div class="clear"></div>
   							</div>';
 			}
@@ -416,7 +417,7 @@ class AjaxChat extends page_generic {
 		header('Content-type: text/html; charset=UTF-8');
 		$arrUnread = $this->getUnreadChats(false);
 		if (count($arrUnread) == 0) {
-			echo '<div class="chatTooltipRemove">Keine ungelesenen Nachrichten</div>';
+			echo '<div class="chatTooltipRemove">'.$this->user->lang('chat_no_unread').'</div>';
 			die();
 		}
 		
@@ -448,7 +449,7 @@ class AjaxChat extends page_generic {
 				if (((int)$row['user_id'] == $this->user->id)){
 					$strOut .='<i class="fa fa-reply"></i>';
 				}
-				$strOut .= $row['text'].'</div>
+				$strOut .= cut_text($row['text'], 50).'</div>
 				<div class="clear"></div>
 			</a></li>';
 		}

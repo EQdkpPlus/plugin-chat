@@ -92,6 +92,7 @@ if (!class_exists('pdh_r_chat_online'))
       }
       
 		$userIDs = $this->pdh->get('user', 'id_list');
+		$userIDs = $this->pdh->sort($userIDs, 'user', 'name', 'asc');
         foreach($userIDs as $user_id){
         	if (!isset($this->data[$user_id])){
         		$this->data[$user_id] = array(
@@ -128,7 +129,7 @@ if (!class_exists('pdh_r_chat_online'))
     	$html .= '<li><div onclick="window.location=\''.$this->routing->build("chat").'\'" class="hand">';
     		
     	$html .= '<div class="chat_user_avatar"><i class="fa fa-group fa-lg floatLeft"></i></div>';
-    	$html .= '<div class="chat_username">Gildenchat</div>';
+    	$html .= '<div class="chat_username">'.$this->user->lang('chat_guildchat').'</div>';
 
     	$html .= '</div></li>';
     	

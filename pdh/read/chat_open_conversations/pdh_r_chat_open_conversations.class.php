@@ -128,7 +128,7 @@ if (!class_exists('pdh_r_chat_open_conversations'))
 	}
 	
 	public function get_is_open($userid, $strKey){
-		if ($this->user[$userid][$strKey]['open']) return true;
+		if ($this->user_data[$userid][$strKey]['open']) return true;
 		return false;
 	}
 
