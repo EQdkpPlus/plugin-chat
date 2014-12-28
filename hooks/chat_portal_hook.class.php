@@ -41,7 +41,7 @@ if (!class_exists('chat_portal_hook'))
 		if ($this->user->check_auth("u_chat_view", false) && $this->core->header_format == 'full' && $this->user->is_signedin()){
 			$this->tpl->js_file($this->root_path.'plugins/chat/includes/js/jquery.tokeninput.js');
 			$this->tpl->js_file($this->root_path.'plugins/chat/includes/js/chat.js');
-			$this->tpl->css_file($this->root_path.'plugins/chat/includes/css/chat.css');			
+			$this->tpl->css_file($this->root_path.'plugins/chat/templates/base_template/chat.css');
 			$this->tpl->add_js("EQdkpChat.init();
 				$('.chat-tooltip-trigger').on('click', function(event){
 					$('#chat-tooltip').show('fast');

@@ -161,9 +161,7 @@ var EQdkpChat = new function(){
 							blinkHeader(key);
 							blinkTitle();
 						} else {
-							$(".chat-"+key).find(".chatNewPost").animate({
-								backgroundColor: "#f9f9f9"
-							}, 800 );
+							$(".chat-"+key).find(".chatNewPost").addClass("noNewPost");
 							$(".chat-"+key).find(".chatNewPost").removeClass("chatNewPost");
 						}
 					}
@@ -277,9 +275,9 @@ var EQdkpChat = new function(){
 			}
 		})*/
 		if (count == 0) {
-			$(".chat-tooltip-container .notification-bubble-red").html("");
+			$(".chat-tooltip-container .notification-bubble-green").html("");
 		} else {
-			$(".chat-tooltip-container .notification-bubble-red").html(count);
+			$(".chat-tooltip-container .notification-bubble-green").html(count);
 		}	
 	}
 	
@@ -325,16 +323,16 @@ var EQdkpChat = new function(){
 	}
 	
 	function unfocusAllWindows(){
-		$(".chatWindow").removeClass("active"); 
-		$(".chatWindowHeader").css("backgroundColor", "#b0b0b0");
+		$(".chatWindow").removeClass("active");
 	}
 	
 	function focusWindow(obj){
 		unfocusAllWindows();
 		$(obj).addClass("active");
 
-		$(obj).find(".chatNewPost").animate({backgroundColor: "#f9f9f9"}, 700).removeClass("chatNewPost");
-		$(obj).find(".chatWindowHeader").stop().css("backgroundColor", "#2E78B0");
+		$(obj).find(".chatNewPost").addClass("noNewPost");
+		
+		$(obj).find(".chatWindowHeader").removeClass('blinkingHeader');
 		stopBlinkTitle();
 		
 		var key = $(obj).parent().attr("data-chat-id");
@@ -346,13 +344,12 @@ var EQdkpChat = new function(){
 	}
 	
 	function focusWindowByKey(key){
-		$(".chatWindow").removeClass("active");	
-		$(".chat-"+key).find(".chatWindowHeader").css("backgroundColor", "#2E78B0");
+		$(".chatWindow").removeClass("active");
+		$(".chat-"+key).find(".chatWindowHeader").removeClass('blinkingHeader');
 		$("#chatInput-"+key).parent().parent().addClass("active");
 		$("#chatInput-"+key).focus();
-		$(".chat-"+key).find(".chatNewPost").animate({
-			backgroundColor: "#f9f9f9"
-		}, 700 );
+		
+		$(".chat-"+key).find(".chatNewPost").addClass('.noNewPost');
 		stopBlinkTitle();
 		updateUnreadWindows();
 		
@@ -390,7 +387,7 @@ var EQdkpChat = new function(){
 	function blinkTitle(){
 		if (!windowFocus) {
 			var isOldTitle = false;
-			var newTitle = "Neue Chat-Nachricht";
+			var newTitle = "New Chatmessage";
 
 			titleInterval = self.setInterval(function(){
 				document.title = isOldTitle ? oldtitle : newTitle;
@@ -411,11 +408,7 @@ var EQdkpChat = new function(){
 	
 	function blinkHeader(key){
 		var header = $(".chat-"+key+" .chatWindowHeader");
-		$(header).animate({backgroundColor:"#2B619C"}, 700, $.proxy(function() {
-			$(header).animate({backgroundColor:"#4086D4"}, 700, $.proxy(function() {
-				blinkHeader(key);
-			}, this));
-		}, this));
+		$(header).addClass('blinkingHeader');
 	}
 
 }

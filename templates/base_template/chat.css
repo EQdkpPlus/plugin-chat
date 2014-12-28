@@ -1,0 +1,388 @@
+.chatContainer {
+	position:fixed;
+	bottom: 0;
+	display:block;
+	right: 0;
+	height: 30px;
+	z-index: 99;
+	width: 100%;
+}
+
+.chatWindowMin {
+    border-right:1px solid #d0d0d0;
+	border-left:1px solid #d0d0d0;
+	border-top:1px solid #d0d0d0;
+    text-align: center;
+    padding: 10px 20px;
+	background-color: #f9f9f9;
+	cursor: pointer;
+	margin-left: 10px;
+}
+
+.chatWindowContainer {
+	  float: left;
+	  height: 30px;
+	  margin-left: 10px;
+	  width: 240px;
+}
+
+.chatWindowHeader, .chatWindowHeader2, .chatWindowHeaderInactive  {
+	background-color: #b0b0b0;
+	color: #fff;
+	padding: 5px 10px;
+	height: 16px;
+	overflow: hidden;
+}
+
+.chatWindowHeaderInactive{
+	background-color: #b0b0b0 !important;
+}
+
+.chatWindowHeader span, .chatWindowHeaderInactive span {
+	display: block;
+    float: left;
+    width: 190px;
+    overflow: hidden;
+}
+
+.chatWindowHeader span input, .chatWindowHeaderInactive span input {
+	height: 16px;
+    margin: -5px 0 0;
+	width: 100%;
+	border: none;
+	border-radius: 0px;
+}
+
+.active .chatWindowHeader, #chatMenu .chatWindowHeader2 {
+	background-color: #2E78B0 !important;
+}
+
+
+.chatOnlineSeperator {
+	border-bottom: 1px solid #D0D0D0;
+    line-height: 0;
+    margin: 0 0 2px;
+    min-height: 1px !important;
+    padding: 0 !important;
+}
+
+
+.chatOnlineList li {
+	display: block;
+	clear: both;
+	padding: 5px 0px;
+	min-height: 23px;
+}
+
+.chatOnlineList {
+	clear: both;
+	margin-bottom: 5px;
+}
+
+.chat_last_online {
+	float: right;
+}
+.chatWindow, .chatWindowMenu {
+	bottom: 0;
+	height: 280px;
+	margin-left: -1px;
+	position: absolute;
+	width: 240px;
+	border-right:1px solid #d0d0d0;
+	border-left:1px solid #d0d0d0;
+	border-top:1px solid #d0d0d0;
+	background-color: #f9f9f9;
+}
+
+.chatWindowContent, .chatWindowAddUser {
+	height: 226px;
+	overflow-y: auto;
+	padding-right: 3px;
+	padding-left: 3px;
+}
+
+#chatMenu .chatWindowMenu {
+	height: auto;
+}
+#chatMenu .chatWindowContent {
+	height: auto;
+	max-height: 400px;
+	overflow-y: auto;
+	padding-right: 10px;
+	color: #000;
+}
+					
+.chat_user_avatar img, .chatAvatar img {
+	max-height: 24px;
+	float: left;
+}
+.chat_username {
+	float: left;
+	margin-left: 5px;
+}
+
+.chatFloat {
+	position: relative;
+	float: right;
+}
+
+.chatInput {
+	border-top: 1px solid #d0d0d0;
+	overflow:hidden;
+	position: absolute;
+	width: 240px;
+	bottom: 0;
+}
+
+#chatMenu .chatInput {
+	position: relative;
+}
+
+.chatInput textarea, .chatInput input {
+	margin: 0;
+	width: 100%;
+	border: none;
+	border-radius: 0px;
+	height: 20px;
+}
+
+.chatAvatar {
+    float: left;
+    width: 30px;
+	margin-top: -12px;
+}
+
+.chatMessage {
+	margin-left: 30px;
+    padding: 3px;
+    word-wrap: break-all;
+	margin-top: -4px;
+	font-size: 12px;
+	color: #000;
+	text-align: left;
+}
+
+.chatTime {
+    color: #afafaf;
+    float: right;
+    font-size: 9px;
+    margin-top: -16px;
+}
+
+.chatPost {
+	border-top: 1px solid #F1F0F0;
+	padding-top: 17px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+.chatNewPost {
+	background-color: #fff8c0;
+}
+
+/* Example tokeninput style #2: Facebook style */
+ul.token-input-list-facebook {
+    overflow: hidden; 
+    height: auto !important; 
+    height: 1%;
+    cursor: text;
+    font-size: 12px;
+    font-family: Verdana;
+    min-height: 1px;
+    z-index: 999;
+    margin: 4px 0 0;
+    padding: 0;
+    list-style-type: none;
+    clear: left;
+	border: 1px solid #8496ba;
+}
+
+ul.token-input-list-facebook li input {
+    border: 0;
+    width: 100px;
+    padding: 3px 8px;
+    margin: 2px 0;
+    -webkit-appearance: caret;
+	border-radius: 0px;
+	box-shadow:none !important;
+	background-color: #F9F9F9;
+}
+
+li.token-input-token-facebook {
+    overflow: hidden; 
+    height: auto !important; 
+    height: 15px;
+    margin: 3px;
+    padding: 3px 4px;
+    background-color: #eff2f7;
+    color: #000;
+    cursor: default;
+    border: 1px solid #ccd5e4;
+    font-size: 11px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    float: left;
+    white-space: nowrap;
+}
+
+li.token-input-token-facebook p {
+    display: inline;
+    padding: 0;
+    margin: 0;
+}
+
+li.token-input-token-facebook span {
+    color: #a6b3cf;
+    margin-left: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+li.token-input-selected-token-facebook {
+    background-color: #5670a6;
+    border: 1px solid #3b5998;
+    color: #fff;
+}
+
+li.token-input-input-token-facebook {
+    float: left;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+div.token-input-dropdown-facebook {
+    position: absolute;
+    background-color: #fff;
+    overflow: hidden;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    cursor: default;
+    font-size: 11px;
+    font-family: Verdana;
+    z-index: 1000;
+}
+
+div.token-input-dropdown-facebook p {
+    margin: 0;
+    padding: 5px;
+    font-weight: bold;
+    color: #777;
+}
+
+div.token-input-dropdown-facebook ul {
+    margin: 0;
+    padding: 0;
+}
+
+div.token-input-dropdown-facebook ul li {
+    background-color: #fff;
+    padding: 3px;
+    margin: 0;
+    list-style-type: none;
+}
+
+div.token-input-dropdown-facebook ul li.token-input-dropdown-item-facebook {
+    background-color: #fff;
+}
+
+div.token-input-dropdown-facebook ul li.token-input-dropdown-item2-facebook {
+    background-color: #fff;
+}
+
+div.token-input-dropdown-facebook ul li em {
+    font-weight: bold;
+    font-style: normal;
+}
+
+div.token-input-dropdown-facebook ul li.token-input-selected-dropdown-item-facebook {
+    background-color: #3b5998;
+    color: #fff;
+}
+
+.chat-tooltip {
+	display:none;
+}
+
+.chatTooltipAvatar {
+	float: left;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 52px;
+    margin-top: 10px;
+}
+
+.chatTooltipAvatar img {
+	max-height: 48px;
+}
+
+.chatTooltipAvatar i {
+	font-size: 48px;
+}
+
+.chatTooltip a {
+	display: block;
+	clear: both;
+}
+
+.chatTooltipTitle {
+	display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: bold;
+    float: left;
+    margin-top: 10px;
+}
+
+.chatTooltipDate {
+	float: right;
+    font-size: 0.8em;
+    text-align: right;
+    width: 95px;
+}
+
+.chatTooltipLastMessage {
+	max-height: 32px;
+    width: 180px;
+    overflow: hidden;
+    float: left;
+}
+
+.chatTooltip li {
+	margin-bottom: 4px;
+}
+
+.blinkingHeader {
+	-webkit-animation: blinkingHeader 3s infinite;
+	animation: blinkingHeader 3s infinite;
+}
+ 
+@-webkit-keyframes blinkingHeader {
+    0% {background-color: #4086D4;}
+    50% {background-color: #2B619C;}
+    100% {background-color: #4086D4;}
+}
+@keyframes blinkingHeader {
+    0% {background-color: #4086D4;}
+    50% {background-color: #2B619C;}
+    100% {background-color: #4086D4;}
+}
+
+.noNewPost {
+	-webkit-animation: noNewPost 1s;
+	animation: noNewPost 1s;
+	animation-iteration-count: 1;
+	background-color: #f9f9f9;
+}
+
+@-webkit-keyframes noNewPost {
+	from {background-color: #fff8c0;}
+    to {background-color: #f9f9f9;}
+}
+@keyframes noNewPost {
+    from {background-color: #fff8c0;}
+    to {background-color: #f9f9f9;}
+}

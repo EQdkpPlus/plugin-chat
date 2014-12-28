@@ -174,7 +174,7 @@ class AjaxChat extends page_generic {
 						$arrUserCount[$row['conversation_key']] = count(unserialize($row['user']));
 					}
 				}
-				
+				$this->bbcode->SetSmiliePath($this->server_path.'images/smilies');
 				while($row = $arrResult->fetchAssoc()){
 					if ($row['date'] <= $arrKey[$row['conversation_key']]) continue;
 					if (!isset($arrNewMessages[$row['conversation_key']])){
@@ -187,7 +187,7 @@ class AjaxChat extends page_generic {
 						'id'		=> $row['id'],
 						'user_id'	=> (int)$row['user_id'],
 						'username'	=> $this->pdh->get('user', 'name', array((int)$row['user_id'])),
-						'text'		=> $row['text'],
+						'text'		=> $this->bbcode->MyEmoticons($row['text']),
 						'reed'		=> $reed,
 						'avatar'	=> $this->pdh->geth('user', 'avatarimglink', array((int)$row['user_id'])),
 						'profile'	=> $this->routing->build('user', $this->pdh->get('user', 'name', array((int)$row['user_id'])), 'u'.$row['user_id']),
@@ -345,7 +345,8 @@ class AjaxChat extends page_generic {
 			if (count($arrUser) > 2){
 				$lastvisit = $this->pdh->get("chat_conversation_lastvisit", "lastVisit", array($this->user->id, $strKey));
 			}
-				
+			$this->bbcode->SetSmiliePath($this->server_path.'images/smilies');
+			
 			while($row = $objQuery->fetchAssoc()){
 				$reed = ($lastvisit === false) ? (((int)$row['user_id'] != $this->user->id && (int)$row['reed'] == 0) ? false : true) : (((int)$row['date'] > $lastvisit) ? false : true);
 				
@@ -354,7 +355,7 @@ class AjaxChat extends page_generic {
 				$arrHTML[] = '<div class="chatPost'.((!$reed) ? ' chatNewPost' : '').'" data-post-id="'.(int)$row['id'].'">
   								<div class="chatTime">'.$this->time->user_date((int)$row['date'], true).'</div>
   								<div class="chatAvatar" title="'.$strUsername.'"><a href="'.$this->routing->build('user', $strUsername, 'u'.$row['user_id']).'">'.$strAvatar.'</a></div>
-  								<div class="chatMessage">'.$row['text'].'</div><div class="clear"></div>
+  								<div class="chatMessage">'.$this->bbcode->MyEmoticons($row['text']).'</div><div class="clear"></div>
   							</div>';
 			}
 		}
