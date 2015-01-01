@@ -167,6 +167,16 @@ if (!class_exists('pdh_r_chat_online'))
     	return $html;
     }
     
+    public function get_online_user(){
+    	$arrOut = array();
+    	foreach($this->data as $user_id => $val){
+    		if ($val['online']){
+    			$arrOut[] = $this->pdh->get('user', 'name', array($user_id));
+    		}
+    	}
+    	return $arrOut;
+    }
+    
 
     private function generate_key($arrUsers){
     	asort($arrUsers);

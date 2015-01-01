@@ -147,7 +147,7 @@ if (!class_exists('pdh_r_chat_messages'))
 							'id'		=> $row['id'],
 							'user_id'	=> (int)$row['user_id'],
 							'username'	=> $this->pdh->get('user', 'name', array((int)$row['user_id'])),
-							'text'		=> $this->bbcode->MyEmoticons($row['text']),
+							'text'		=> nl2br($this->bbcode->MyEmoticons($row['text'])),
 							'reed'		=> 0,
 							'avatar'	=> $this->pdh->geth('user', 'avatarimglink', array((int)$row['user_id'])),
 							'profile'	=> $this->routing->build('user', $this->pdh->get('user', 'name', array((int)$row['user_id'])), 'u'.$row['user_id']),
@@ -171,7 +171,7 @@ if (!class_exists('pdh_r_chat_messages'))
 								'id'		=> $row['id'],
 								'user_id'	=> (int)$row['user_id'],
 								'username'	=> $this->pdh->get('user', 'name', array((int)$row['user_id'])),
-								'text'		=> $this->bbcode->MyEmoticons($row['text']),
+								'text'		=> nl2br($this->bbcode->MyEmoticons($row['text'])),
 								'reed'		=> 1,
 								'avatar'	=> $this->pdh->geth('user', 'avatarimglink', array((int)$row['user_id'])),
 								'profile'	=> $this->routing->build('user', $this->pdh->get('user', 'name', array((int)$row['user_id'])), 'u'.$row['user_id']),
@@ -185,7 +185,7 @@ if (!class_exists('pdh_r_chat_messages'))
 			$sql = 'SELECT
                *
               FROM `__chat_messages`
-				WHERE id > (SELECT id FROM __chat_messages WHERE user_id !=? AND reed = 0 AND conversation_key=? ORDER BY id ASC LIMIT 1 ) AND conversation_key=?
+				WHERE id >= (SELECT id FROM __chat_messages WHERE user_id !=? AND reed = 0 AND conversation_key=? ORDER BY id ASC LIMIT 1 ) AND conversation_key=?
               ORDER BY date DESC;';
 			$result = $this->db->prepare($sql)->execute($this->user->id, $strConversationKey, $strConversationKey);
 			if ($result && $result->numRows)
@@ -195,7 +195,7 @@ if (!class_exists('pdh_r_chat_messages'))
 						'id'		=> $row['id'],
 						'user_id'	=> (int)$row['user_id'],
 						'username'	=> $this->pdh->get('user', 'name', array((int)$row['user_id'])),
-						'text'		=> $this->bbcode->MyEmoticons($row['text']),
+						'text'		=> nl2br($this->bbcode->MyEmoticons($row['text'])),
 						'reed'		=> ((int)$row['user_id'] == $this->user->id) ? 1 : (int)$row['reed'],
 						'avatar'	=> $this->pdh->geth('user', 'avatarimglink', array((int)$row['user_id'])),
 						'profile'	=> $this->routing->build('user', $this->pdh->get('user', 'name', array((int)$row['user_id'])), 'u'.$row['user_id']),
@@ -218,7 +218,7 @@ if (!class_exists('pdh_r_chat_messages'))
 								'id'		=> $row['id'],
 								'user_id'	=> (int)$row['user_id'],
 								'username'	=> $this->pdh->get('user', 'name', array((int)$row['user_id'])),
-								'text'		=> $this->bbcode->MyEmoticons($row['text']),
+								'text'		=> nl2br($this->bbcode->MyEmoticons($row['text'])),
 								'reed'		=> ((int)$row['user_id'] == $this->user->id) ? 1 : (int)$row['reed'],
 								'avatar'	=> $this->pdh->geth('user', 'avatarimglink', array((int)$row['user_id'])),
 								'profile'	=> $this->routing->build('user', $this->pdh->get('user', 'name', array((int)$row['user_id'])), 'u'.$row['user_id']),

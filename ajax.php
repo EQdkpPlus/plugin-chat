@@ -52,6 +52,7 @@ class AjaxChat extends page_generic {
 			'html'	=> $htmlUserlist,
 			'count' => $this->pdh->get('chat_online', 'online_user_count', array()),
 			'unread' => $this->getUnreadChats(),
+			'user' => $this->pdh->get('chat_online', 'online_user', array()),
 		);
 		echo json_encode($arrOut);
 		die();
@@ -187,7 +188,7 @@ class AjaxChat extends page_generic {
 						'id'		=> $row['id'],
 						'user_id'	=> (int)$row['user_id'],
 						'username'	=> $this->pdh->get('user', 'name', array((int)$row['user_id'])),
-						'text'		=> $this->bbcode->MyEmoticons($row['text']),
+						'text'		=> nl2br($this->bbcode->MyEmoticons($row['text'])),
 						'reed'		=> $reed,
 						'avatar'	=> $this->pdh->geth('user', 'avatarimglink', array((int)$row['user_id'])),
 						'profile'	=> $this->routing->build('user', $this->pdh->get('user', 'name', array((int)$row['user_id'])), 'u'.$row['user_id']),
@@ -355,7 +356,7 @@ class AjaxChat extends page_generic {
 				$arrHTML[] = '<div class="chatPost'.((!$reed) ? ' chatNewPost' : '').'" data-post-id="'.(int)$row['id'].'">
   								<div class="chatTime">'.$this->time->user_date((int)$row['date'], true).'</div>
   								<div class="chatAvatar" title="'.$strUsername.'"><a href="'.$this->routing->build('user', $strUsername, 'u'.$row['user_id']).'">'.$strAvatar.'</a></div>
-  								<div class="chatMessage">'.$this->bbcode->MyEmoticons($row['text']).'</div><div class="clear"></div>
+  								<div class="chatMessage">'.nl2br($this->bbcode->MyEmoticons($row['text'])).'</div><div class="clear"></div>
   							</div>';
 			}
 		}

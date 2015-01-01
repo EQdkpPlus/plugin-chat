@@ -3,6 +3,8 @@ var EQdkpChat = new function(){
 	var oldtitle = document.title;
 	var titleInterval;
 	var unreadChats = new Array();
+	var onlineUsers = new Array();
+	var mybreak = false;
 	
 	var check_new_interval, onlinelist_interval;
 	
@@ -23,7 +25,25 @@ var EQdkpChat = new function(){
 				})
 				updateUnreadWindows();
 			}
+			//OnlineUsers
+			onlineUsers = data.user;
+			$('#chatWindowList').find('.eqdkp-icon-online').remove();
 			
+			$(".chatWindowContainer").each(function(v){
+				var key = $(this).attr("data-chat-id");
+				var count = $(this).attr("data-user-count");
+
+				if (key != "" && count < 3) {
+					var title = $(".chat-"+key+" .chatWindow .chatWindowHeader span").html();
+					if (title && title != ""){
+						if($.inArray(title, onlineUsers) >= 0){
+							title = '<i class="eqdkp-icon-online" style="vertical-align: middle;"></i> '+title;
+							$(".chat-"+key+" .chatWindow .chatWindowHeader span").html(title);
+						}
+					}
+					
+				}
+			});
 		});
 	}
 	
@@ -301,16 +321,28 @@ var EQdkpChat = new function(){
 			var key = $(this).parent().parent().parent().attr("data-chat-id");
 			
             if (e.which == 13 && value != "") {
-            	if (value != "\n"){
-            		$.post(mmocms_root_path+ "plugins/chat/ajax.php"+mmocms_sid+"&save", { key: key, txt: value });
-            		var html = '<div class="chatPost chatTmpPost"><div class="chatTime">now</div><div class="chatAvatar"><i class="fa-spin fa fa-spinner fa-lg"></i></div><div class="chatMessage">'+value+'</div><div class="clear"></div></div>';
-            		$(".chatMessages-"+key).append(html);
-            		$(".chat-"+key).find(".chatReed").remove();
-            		$(".chat-"+key+" .chatWindowContent").scrollTop($(".chat-"+key+" .chatWindowContent")[0].scrollHeight);
+            	if (e.ctrlKey){
+            		if (mybreak){
+            			value += "\n";
+            			$(this).val(value);
+            			mybreak = false;
+            		} else {
+            			mybreak = true;
+            		}
+            	} else {
+            	
+	            	if (value != "\n"){
+	            		$.post(mmocms_root_path+ "plugins/chat/ajax.php"+mmocms_sid+"&save", { key: key, txt: value });
+	            		var html = '<div class="chatPost chatTmpPost"><div class="chatTime">now</div><div class="chatAvatar"><i class="fa-spin fa fa-spinner fa-lg"></i></div><div class="chatMessage">'+value+'</div><div class="clear"></div></div>';
+	            		$(".chatMessages-"+key).append(html);
+	            		$(".chat-"+key).find(".chatReed").remove();
+	            		$(".chat-"+key+" .chatWindowContent").scrollTop($(".chat-"+key+" .chatWindowContent")[0].scrollHeight);
+	            	}
+	
+					$(this).val("");
+				    $(this).height(20);
+			    
             	}
-
-				$(this).val("");
-			    $(this).height(20);	
 			}
         });
         
@@ -379,7 +411,20 @@ var EQdkpChat = new function(){
 	
 	function openChatWindow(key, title, count){
 		if ($("#chatWindowList").find(".chat-"+key).length == 0){
-			var html = '<div class="chatWindowContainer chat-'+key+'" data-chat-id="'+key+'" data-user-count="'+count+'" data-opened="1"><div class="chatWindow"><div class="chatWindowHeader"><span>'+title+'</span><i class="fa fa-times floatRight hand" onclick="EQdkpChat.closeConversation(\''+key+'\')" style="margin-right: -5px; margin-left: 5px;"></i><i class="fa fa-plus floatRight hand" onclick="EQdkpChat.addUser(\''+key+'\')"></i></div><div class="chatWindowAddUser" style="display:none;"><input type="text" class="demo-input-local" name="blah" /><button type="button" onclick="EQdkpChat.addUserSubmit(\''+key+'\');"><i class="fa fa-check"></i> Absenden</button></div><div class="chatWindowContent"><span class="chatMessages-'+key+'"></span><div class="clear"></div></div><div class="chatInput"><textarea id="chatInput-'+key+'" class="chatInputSubmit" style="overflow: hidden; word-wrap: break-word; resize: none;"></textarea></div><div class="clear"></div><div class="chatLastMessage-'+key+'" style="display:none;">0</div><div class="chatLastMessageByMe-'+key+'" style="display:none;">0</div></div></div>';				
+			var icon = "";
+
+			if (count <= 2){
+				//is he online?
+
+				if($.inArray(title, onlineUsers) >= 0){
+					icon = '<i class="eqdkp-icon-online" style="vertical-align: middle;"></i> ';
+				}
+			} else {
+				//group icon
+				//icon = '<i class="fa fa-group"  style="vertical-align: middle;"></i> ';
+			}
+			
+			var html = '<div class="chatWindowContainer chat-'+key+'" data-chat-id="'+key+'" data-user-count="'+count+'" data-opened="1"><div class="chatWindow"><div class="chatWindowHeader"><span>'+icon+title+'</span><i class="fa fa-times floatRight hand" onclick="EQdkpChat.closeConversation(\''+key+'\')" style="margin-right: -5px; margin-left: 5px;"></i><i class="fa fa-plus floatRight hand" onclick="EQdkpChat.addUser(\''+key+'\')"></i></div><div class="chatWindowAddUser" style="display:none;"><input type="text" class="demo-input-local" name="blah" /><button type="button" onclick="EQdkpChat.addUserSubmit(\''+key+'\');"><i class="fa fa-check"></i> Absenden</button></div><div class="chatWindowContent"><span class="chatMessages-'+key+'"></span><div class="clear"></div></div><div class="chatInput"><textarea id="chatInput-'+key+'" class="chatInputSubmit" style="overflow: hidden; word-wrap: break-word; resize: none;"></textarea></div><div class="clear"></div><div class="chatLastMessage-'+key+'" style="display:none;">0</div><div class="chatLastMessageByMe-'+key+'" style="display:none;">0</div></div></div>';				
 			$("#chatWindowList").append(html);
 		}
 	}

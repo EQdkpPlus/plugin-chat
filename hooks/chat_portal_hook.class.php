@@ -63,9 +63,7 @@ if (!class_exists('chat_portal_hook'))
 			", "docready");
 			
 			$this->tpl->assign_block_vars("personal_area_addition", array(
-				"TEXT" => '<div class="chat-tooltip-container"><a href="'.register("routing")->build("chathistory").'">
-									<i class="fa fa-comments fa-lg"></i> '.$this->user->lang('chat').'
-									</a> 
+				"TEXT" => '<div class="chat-tooltip-container"><a href="'.register("routing")->build("chathistory").'"><i class="fa fa-comments fa-lg"></i><span class="hiddenSmartphone">'.$this->user->lang('chat').'</span></a> 
 									<div class="notification-tooltip-container">
 									<span class="notification-bubble-green chat-tooltip-trigger hand"></span>
 									<ul class="dropdown-menu chat-tooltip" role="menu" id="chat-tooltip">
