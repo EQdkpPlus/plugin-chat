@@ -1,16 +1,4 @@
 <style>
-.chatSidebar {
-	width: 300px;
-	display: table-cell;
-	vertical-align: top;
-}
-
-.chatContent {
-	display: table-cell;
-    vertical-align: top;
-    padding-right: 20px;
-}
-
 .chatSidebarAvatar {
 	float: left;
     margin-left: 10px;
@@ -135,34 +123,37 @@ $(document).ready(function(){
 	<div class="clear"></div>
 </div>
 
-<div class="table">
-	<div class="tr">
-		
-		<section class="chatContent">
-			<div class="chatBigContainer">
-				<div data-user-count="3" data-chat-id="{CHAT_KEY}" class="chatWindowContainer chat-{CHAT_KEY}">
-					<div class="chatWindow active">
-						<div class="chatWindowContent">
-							<div class="chatMessages-{CHAT_KEY} bigScrollContainer">{CHAT_CONTENT}</div>
+<div class="grid">
+	<div class="onerow">
+		<div class="col10">
+			<section class="chatContent">
+				<div class="chatBigContainer">
+					<div data-user-count="3" data-chat-id="{CHAT_KEY}" class="chatWindowContainer chat-{CHAT_KEY}">
+						<div class="chatWindow active">
+							<div class="chatWindowContent">
+								<div class="chatMessages-{CHAT_KEY} bigScrollContainer">{CHAT_CONTENT}</div>
+							</div>
+							<div class="chatInput">
+								<textarea style="overflow: hidden; word-wrap: break-word; resize: none;" class="chatInputSubmit" id="chatInput-{CHAT_KEY}"></textarea>
+							</div>
+							<div class="clear"></div>
+							<div style="display:none;" class="chatLastMessage-{CHAT_KEY}">{CHAT_LAST_MESSAGE}</div>
+							<div style="display:none;" class="chatLastMessageByMe-{CHAT_KEY}">{CHAT_LASTBYME}</div>
 						</div>
-						<div class="chatInput">
-							<textarea style="overflow: hidden; word-wrap: break-word; resize: none;" class="chatInputSubmit" id="chatInput-{CHAT_KEY}"></textarea>
-						</div>
-						<div class="clear"></div>
-						<div style="display:none;" class="chatLastMessage-{CHAT_KEY}">{CHAT_LAST_MESSAGE}</div>
-						<div style="display:none;" class="chatLastMessageByMe-{CHAT_KEY}">{CHAT_LASTBYME}</div>
 					</div>
 				</div>
-			</div>
-		</section>
-		
-		<aside class="chatSidebar">
-			<h2>{L_chat_user_online} ({CHAT_ONLINE_COUNT}):</h2>
-			<ul>
-			<!-- BEGIN chat_online_row -->
-			{chat_online_row.USER}
-			<!-- END chat_online_row -->
-			</ul>
-		</aside>
+			</section>
+		</div>
+		<div class="col2 last">
+			<aside class="chatSidebar">
+				<h2>{L_chat_user_online} ({CHAT_ONLINE_COUNT}):</h2>
+				<ul>
+				<!-- BEGIN chat_online_row -->
+				{chat_online_row.USER}
+				<!-- END chat_online_row -->
+				</ul>
+			</aside>
+		</div>
 	</div>
 </div>
+<div class="clear"></div>
