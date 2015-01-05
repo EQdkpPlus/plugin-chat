@@ -82,7 +82,7 @@ if (!class_exists('pdh_r_chat_messages'))
       $sql = 'SELECT
                *
               FROM `__chat_messages`
-              ORDER BY date ASC;';
+              ORDER BY id ASC;';
       $result = $this->db->query($sql);
       if ($result)
       {
@@ -138,7 +138,7 @@ if (!class_exists('pdh_r_chat_messages'))
 		
 		if (count($arrUser) > 2){
 			$lastvisit = $this->pdh->get("chat_conversation_lastvisit", "lastVisit", array($this->user->id, $strConversationKey));
-			$sql = 'SELECT * FROM `__chat_messages` WHERE date > ? AND conversation_key=? ORDER BY date DESC;';
+			$sql = 'SELECT * FROM `__chat_messages` WHERE date > ? AND conversation_key=? ORDER BY id DESC;';
 			$result = $this->db->prepare($sql)->execute($lastvisit, $strConversationKey);
 			if ($result && $result->numRows)
 			{
@@ -161,7 +161,7 @@ if (!class_exists('pdh_r_chat_messages'))
                *
               FROM `__chat_messages`
 				WHERE conversation_key=?
-              ORDER BY date DESC';
+              ORDER BY id DESC';
 				$result = $this->db->prepare($sql)->limit(20)->execute($strConversationKey);
 				if ($result && $result->numRows)
 				{
@@ -186,7 +186,7 @@ if (!class_exists('pdh_r_chat_messages'))
                *
               FROM `__chat_messages`
 				WHERE id >= (SELECT id FROM __chat_messages WHERE user_id !=? AND reed = 0 AND conversation_key=? ORDER BY id ASC LIMIT 1 ) AND conversation_key=?
-              ORDER BY date DESC;';
+              ORDER BY id DESC;';
 			$result = $this->db->prepare($sql)->execute($this->user->id, $strConversationKey, $strConversationKey);
 			if ($result && $result->numRows)
 			{
@@ -207,8 +207,8 @@ if (!class_exists('pdh_r_chat_messages'))
 				$sql = 'SELECT
 	               *
 	              FROM `__chat_messages`
-					WHERE conversation_key=?
-	              ORDER BY date DESC';
+				  WHERE conversation_key=?
+	              ORDER BY id DESC';
 				$result = $this->db->prepare($sql)->limit(20)->execute($strConversationKey);
 				if ($result && $result->numRows)
 				{
