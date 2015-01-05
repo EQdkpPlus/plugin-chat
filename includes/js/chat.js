@@ -32,9 +32,9 @@ var EQdkpChat = new function(){
 			$(".chatWindowContainer").each(function(v){
 				var key = $(this).attr("data-chat-id");
 				var count = $(this).attr("data-user-count");
-
 				if (key != "" && count < 3) {
 					var title = $(".chat-"+key+" .chatWindow .chatWindowHeader span").html();
+					title = $.trim(title);
 					if (title && title != ""){
 						if($.inArray(title, onlineUsers) >= 0){
 							title = '<i class="eqdkp-icon-online" style="vertical-align: middle;"></i> '+title;
