@@ -30,6 +30,10 @@ class chathistory_pageobject extends pageobject
     // plugin installed?
     if (!$this->pm->check('chat', PLUGIN_INSTALLED))
       message_die($this->user->lang('gr_plugin_not_installed'));
+    
+    if(!$this->user->is_signedin()){
+    	$this->user->check_auth('u_chat_something');
+    }
 
     $handler = array();
     parent::__construct('u_chat_view', $handler);
