@@ -228,7 +228,7 @@ var EQdkpChat = new function(){
 					} else {
 						var newpost = "";								
 					}
-					var html = '<div class="chatPost'+newpost+'" data-post-id="'+v.id+'"><div class="chatTime">'+v.date+'</div><div class="chatAvatar" title="'+v.username+'"><a href="'+v.profile+'">'+v.avatar+'</a></div><div class="chatMessage">'+v.text+'</div><div class="clear"></div></div>';
+					var html = '<div class="chatPost'+newpost+'" data-post-id="'+v.id+'"><div class="chatTime">'+v.date+'</div><div class="chatAvatar" title="'+v.username+'"><a href="'+v.profile+'">'+v.avatar+'</a></div><div class="chatUsername">'+v.username+'</div><div class="chatMessage">'+v.text+'</div><div class="clear"></div></div>';
 					$(".chatContainer .chatMessages-"+key).append(html);
 				}
 				
@@ -240,7 +240,7 @@ var EQdkpChat = new function(){
 					} else {
 						var newpost = "";								
 					}
-					var html = '<div class="chatPost'+newpost+'" data-post-id="'+v.id+'"><div class="chatTime">'+v.date+'</div><div class="chatAvatar" title="'+v.username+'"><a href="'+v.profile+'">'+v.avatar+'</a></div><div class="chatMessage">'+v.text+'</div><div class="clear"></div></div>';
+					var html = '<div class="chatPost'+newpost+'" data-post-id="'+v.id+'"><div class="chatTime">'+v.date+'</div><div class="chatAvatar" title="'+v.username+'"><a href="'+v.profile+'">'+v.avatar+'</a></div><div class="chatUsername">'+v.username+'</div><div class="chatMessage">'+v.text+'</div><div class="clear"></div></div>';
 					$(".chatBigContainer .chatMessages-"+key).append(html);
 				}
 			});						
@@ -449,11 +449,11 @@ var EQdkpChat = new function(){
 	function stopBlinkTitle(){
 		document.title = oldtitle;
 		window.clearInterval(titleInterval);
+		windowFocus = true;
 	}
 	
 	function blinkHeader(key){
 		var header = $(".chat-"+key+" .chatWindowHeader");
 		$(header).addClass('blinkingHeader');
 	}
-
-}
+};

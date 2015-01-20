@@ -181,6 +181,14 @@
     margin-top: -16px;
 }
 
+.chatUsername {
+    color: #afafaf;
+    float: left;
+    font-size: 9px;
+    margin-top: -15px;
+    padding-left: 3px;
+}
+
 .chatPost {
 	border-top: 1px solid #F1F0F0;
 	padding-top: 17px;

@@ -67,6 +67,7 @@ class chat_pageobject extends pageobject
 				$arrHTML[] = '<div class="chatPost'.((!$reed) ? ' chatNewPost' : '').'" data-post-id="'.(int)$row['id'].'">
   								<div class="chatTime">'.$this->time->user_date((int)$row['date'], true).'</div>
   								<div class="chatAvatar" title="'.$strUsername.'"><a href="'.$this->routing->build('user', $strUsername, 'u'.$row['user_id']).'">'.$strAvatar.'</a></div>
+  								<div class="chatUsername">'.$strUsername.'</div>
   								<div class="chatMessage">'.$row['text'].'</div><div class="clear"></div>
   							</div>';
 			}

@@ -356,6 +356,7 @@ class AjaxChat extends page_generic {
 				$arrHTML[] = '<div class="chatPost'.((!$reed) ? ' chatNewPost' : '').'" data-post-id="'.(int)$row['id'].'">
   								<div class="chatTime">'.$this->time->user_date((int)$row['date'], true).'</div>
   								<div class="chatAvatar" title="'.$strUsername.'"><a href="'.$this->routing->build('user', $strUsername, 'u'.$row['user_id']).'">'.$strAvatar.'</a></div>
+  								<div class="chatUsername">'.$strUsername.'</div>
   								<div class="chatMessage">'.nl2br($this->bbcode->MyEmoticons($row['text'])).'</div><div class="clear"></div>
   							</div>';
 			}
