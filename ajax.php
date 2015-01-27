@@ -40,6 +40,7 @@ class AjaxChat extends page_generic {
 			'loadOlderMessages'=> array('process' => 'loadOlderMessages'),
 			'archiveGroupConv'	=> array('process' => 'archiveGroupConversation'),
 			'unreadTooltip'		=> array('process' => 'unreadTooltip'),
+			'leaveConversation'	=> array('process' => 'leaveConversation'),
 		);
 		parent::__construct(false, $handler);
 		$this->process();
@@ -125,9 +126,11 @@ class AjaxChat extends page_generic {
 		$strMessage = $this->in->get('txt');
 		$strKey = $this->in->get('key');
 		if ($strMessage != "" && $strKey != ""){
-			$this->pdh->put('chat_messages', 'addMessage', array($strKey, $strMessage));
-			
 			$arrUser = $this->pdh->get("chat_conversations", "user", array($strKey));
+			if($strKey != 'guildchat' && !in_array($this->user->id, $arrUser)) return false;
+			
+			$this->pdh->put('chat_messages', 'addMessage', array($strKey, $strMessage));
+
 			if (count($arrUser) <= 2){
 				$this->pdh->put("chat_messages", "markRead", array($strKey));
 			} else {
@@ -284,10 +287,11 @@ class AjaxChat extends page_generic {
 	
 	public function addUser(){
 		header('Content-type: application/json; charset=UTF-8');
+		
 		$arrUser = explode(",", $this->in->get('user'));
 		$arrUser[] = $this->user->id;
 		
-		if (count($arrUser) > 1){
+		if ($this->in->get('user') != "" && count($arrUser) > 1){
 			asort($arrUser);
 			$strKey = md5(implode(",", $arrUser));
 			
@@ -306,6 +310,8 @@ class AjaxChat extends page_generic {
 					'lasttime' => $arrLastMessage['timestamp'],
 					'lastbyme' => ($arrLastMessage['user_id'] == $this->user->id) ? 1 : 0,
 			);
+		} else {
+			$arrOut['count'] = 0;
 		}
 
 		echo json_encode($arrOut);
@@ -315,6 +321,27 @@ class AjaxChat extends page_generic {
 	public function archiveGroupConversation(){
 		$strKey = $this->in->get('key');
 		$this->pdh->put("chat_open_conversations", "archiveConversation", array($strKey, $this->user->id));
+	}
+	
+	public function leaveConversation(){
+		$strKey = $this->in->get('key');
+		$arrUser = $this->pdh->get("chat_conversations", "user", array($strKey));
+		$key = array_search($this->user->id, $arrUser);
+		if($key !== false){
+			unset($arrUser[$key]);
+			asort($arrUser);
+			$strNewKey = md5(implode(",", $arrUser));
+			//Open Conversations with old key
+			$arrOpenUser = $this->pdh->get("chat_open_conversations", "openConversationsWithkey", array($strKey));
+			$key = array_search($this->user->id, $arrOpenUser);
+			if($key !== false) unset($arrOpenUser[$key]);
+			//Close old windows & open new windows
+			foreach($arrOpenUser as $intUserID){
+				$this->pdh->put("chat_open_conversations", "closeConversation", array($strKey, $intUserID));
+				$this->pdh->put("chat_open_conversations", "openConversation", array($strNewKey, $intUserID, 1, $arrUser));
+				$this->pdh->process_hook_queue();
+			}
+		}
 	}
 	
 	public function changeTitle(){
@@ -353,11 +380,14 @@ class AjaxChat extends page_generic {
 				
 				$strAvatar = $this->pdh->geth('user', 'avatarimglink', array((int)$row['user_id']));
 				$strUsername = $this->pdh->get('user', 'name', array((int)$row['user_id']));
-				$arrHTML[] = '<div class="chatPost'.((!$reed) ? ' chatNewPost' : '').'" data-post-id="'.(int)$row['id'].'">
-  								<div class="chatTime">'.$this->time->user_date((int)$row['date'], true).'</div>
+				$mine = ((int)$row['user_id'] === $this->user->id) ? ' mine' : '';
+				$arrHTML[] = '<div class="chatPost'.((!$reed) ? ' chatNewPost' : '').$mine.'" data-post-id="'.(int)$row['id'].'">
   								<div class="chatAvatar" title="'.$strUsername.'"><a href="'.$this->routing->build('user', $strUsername, 'u'.$row['user_id']).'">'.$strAvatar.'</a></div>
-  								<div class="chatUsername">'.$strUsername.'</div>
-  								<div class="chatMessage">'.nl2br($this->bbcode->MyEmoticons($row['text'])).'</div><div class="clear"></div>
+  								<div class="chatMsgContainer">
+  									<div class="chatUsername">'.$strUsername.'</div>
+  									<div class="chatTime">'.$this->time->user_date((int)$row['date'], true).'</div>
+  									<div class="chatMessage">'.nl2br($this->bbcode->MyEmoticons($row['text'])).'</div><div class="clear"></div>
+  								</div>
   							</div>';
 			}
 		}

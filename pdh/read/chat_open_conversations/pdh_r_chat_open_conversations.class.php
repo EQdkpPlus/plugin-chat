@@ -86,13 +86,17 @@ if (!class_exists('pdh_r_chat_open_conversations'))
         // add row by row to local copy
         while ($row = $result->fetchAssoc())
         {
-          $this->data[$row['conversation_key']] = array(
+          $this->data[(int)$row['user_id'].'.'.$row['conversation_key']] = array(
             'user_id'			=> (int)$row['user_id'],
 			'conversation_key'	=> $row['conversation_key'],
 			'open'				=> (int)$row['open'],
           );
 
-          $this->user_data[(int)$row['user_id']][$row['conversation_key']] =  $this->data[$row['conversation_key']];
+          $this->user_data[(int)$row['user_id']][$row['conversation_key']] =  array(
+            'user_id'			=> (int)$row['user_id'],
+			'conversation_key'	=> $row['conversation_key'],
+			'open'				=> (int)$row['open'],
+          );
         }
 
       }
@@ -130,6 +134,16 @@ if (!class_exists('pdh_r_chat_open_conversations'))
 	public function get_is_open($userid, $strKey){
 		if ($this->user_data[$userid][$strKey]['open']) return true;
 		return false;
+	}
+	
+	public function get_openConversationsWithkey($strKey){
+		$arrOut = array();
+		foreach($this->data as $var){
+			if($var['conversation_key'] === $strKey && $var['open']){
+				$arrOut[] = $var['user_id'];
+			}
+		}
+		return $arrOut;
 	}
 
 

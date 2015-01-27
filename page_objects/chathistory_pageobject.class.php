@@ -43,7 +43,8 @@ class chathistory_pageobject extends pageobject
   
   public function display()
   {
-	
+  	$this->bbcode->SetSmiliePath($this->server_path.'images/smilies');
+  	
   	//Get all conversations, sorted by last message date
   	$arrConversations = $this->pdh->get("chat_conversations", "id_list");
   	$arrMyConversations = array();
@@ -101,7 +102,7 @@ class chathistory_pageobject extends pageobject
 	  				'KEY'		=> $row['conversation_key'],
 	  				'avatar'	=> $strAvatar,
   					'user_id'	=> (int)$row['user_id'],
-  					'text'		=> $row['text'],
+  					'text'		=> nl2br($this->bbcode->MyEmoticons($row['text'])),
   					'reed'		=> ((int)$row['user_id'] == $this->user->id) ? 1 : (int)$row['reed'],
   					'date'		=> $this->time->user_date((int)$row['date'], true),
   					'timestamp'	=> (int)$row['date'],
@@ -136,11 +137,14 @@ class chathistory_pageobject extends pageobject
 				
 				$strAvatar = $this->pdh->geth('user', 'avatarimglink', array((int)$row['user_id']));
 				$strUsername = $this->pdh->get('user', 'name', array((int)$row['user_id']));
-				$arrHTML[] = '<div class="chatPost'.((!$reed) ? ' chatNewPost' : '').'" data-post-id="'.(int)$row['id'].'">
-  								<div class="chatTime">'.$this->time->user_date((int)$row['date'], true).'</div>
+				$mine = ((int)$row['user_id'] === $this->user->id) ? ' mine' : '';
+				$arrHTML[] = '<div class="chatPost'.((!$reed) ? ' chatNewPost' : '').$mine.'" data-post-id="'.(int)$row['id'].'">
   								<div class="chatAvatar" title="'.$strUsername.'"><a href="'.$this->routing->build('user', $strUsername, 'u'.$row['user_id']).'">'.$strAvatar.'</a></div>
-  								<div class="chatUsername">'.$strUsername.'</div>
-  								<div class="chatMessage">'.$row['text'].'</div><div class="clear"></div>
+  								<div class="chatMsgContainer">
+  									<div class="chatUsername">'.$strUsername.'</div>
+  									<div class="chatTime">'.$this->time->user_date((int)$row['date'], true).'</div>
+  									<div class="chatMessage">'.nl2br($this->bbcode->MyEmoticons($row['text'])).'</div><div class="clear"></div>
+  								</div>
   							</div>';
 			}
 		}

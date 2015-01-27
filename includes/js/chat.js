@@ -106,6 +106,8 @@ var EQdkpChat = new function(){
 		$(".chat-"+key+" .chatWindowAddUser").hide();
 		
 		$.post(mmocms_root_path+ "plugins/chat/ajax.php"+mmocms_sid+"&addUser", {user: myuser}, function(data){
+			if(data.count < 2) return;
+			
 			var key = data.key;
 			openChatWindow(key, data.title, data.count);
 			addMessages(key, data, 0);
@@ -128,6 +130,12 @@ var EQdkpChat = new function(){
 	this.editTitleSubmit = editTitleSubmit;
 	
 	this.archiveGroupConversation = archiveGroupConversation;
+	
+	this.leaveConversation = function(key){
+		this.closeConversation(key);
+		$.post(mmocms_root_path+ "plugins/chat/ajax.php"+mmocms_sid+"&leaveConversation", {key: key}, function(data){
+		});
+	};
 	
 	function archiveGroupConversation(obj, key){
 		$(obj).parent().parent().remove();
@@ -228,7 +236,8 @@ var EQdkpChat = new function(){
 					} else {
 						var newpost = "";								
 					}
-					var html = '<div class="chatPost'+newpost+'" data-post-id="'+v.id+'"><div class="chatTime">'+v.date+'</div><div class="chatAvatar" title="'+v.username+'"><a href="'+v.profile+'">'+v.avatar+'</a></div><div class="chatUsername">'+v.username+'</div><div class="chatMessage">'+v.text+'</div><div class="clear"></div></div>';
+					if(v.user_id == mmocms_userid) { var mine = ' mine'; } else { var mine = ''; }
+					var html = '<div class="chatPost'+newpost+mine+'" data-post-id="'+v.id+'"><div class="chatAvatar" title="'+v.username+'"><a href="'+v.profile+'">'+v.avatar+'</a></div><div class="chatMsgContainer"><div class="chatUsername">'+v.username+'</div><div class="chatTime">'+v.date+'</div><div class="chatMessage">'+v.text+'</div></div><div class="clear"></div></div>';
 					$(".chatContainer .chatMessages-"+key).append(html);
 				}
 				
@@ -240,7 +249,8 @@ var EQdkpChat = new function(){
 					} else {
 						var newpost = "";								
 					}
-					var html = '<div class="chatPost'+newpost+'" data-post-id="'+v.id+'"><div class="chatTime">'+v.date+'</div><div class="chatAvatar" title="'+v.username+'"><a href="'+v.profile+'">'+v.avatar+'</a></div><div class="chatUsername">'+v.username+'</div><div class="chatMessage">'+v.text+'</div><div class="clear"></div></div>';
+					if(v.user_id == mmocms_userid) { var mine = ' mine'; } else { var mine = ''; }
+					var html = '<div class="chatPost'+newpost+mine+'" data-post-id="'+v.id+'"><div class="chatAvatar" title="'+v.username+'"><a href="'+v.profile+'">'+v.avatar+'</a></div><div class="chatMsgContainer"><div class="chatUsername">'+v.username+'</div><div class="chatTime">'+v.date+'</div><div class="chatMessage">'+v.text+'</div></div><div class="clear"></div></div>';
 					$(".chatBigContainer .chatMessages-"+key).append(html);
 				}
 			});						
@@ -312,7 +322,8 @@ var EQdkpChat = new function(){
 		
         $(document).on("keyup blur", ".chatInputSubmit", function(e){
 			e.preventDefault();
-            var value = $(this).val();        
+            var value = $(this).val();
+            if(value == "") $(this).height(20);
 
             while($(this).outerHeight() < this.scrollHeight) {
 				$(this).height($(this).height()+20);
@@ -333,7 +344,7 @@ var EQdkpChat = new function(){
             	
 	            	if (value != "\n"){
 	            		$.post(mmocms_root_path+ "plugins/chat/ajax.php"+mmocms_sid+"&save", { key: key, txt: value });
-	            		var html = '<div class="chatPost chatTmpPost"><div class="chatTime">now</div><div class="chatAvatar"><i class="fa-spin fa fa-spinner fa-lg"></i></div><div class="chatMessage">'+value+'</div><div class="clear"></div></div>';
+	            		var html = '<div class="chatPost chatTmpPost mine"><div class="chatAvatar"><i class="fa-spin fa fa-spinner fa-lg"></i></div><div class="chatMsgContainer"><div class="chatTime">now</div><div class="chatMessage">'+value+'</div></div><div class="clear"></div></div>';
 	            		$(".chatMessages-"+key).append(html);
 	            		$(".chat-"+key).find(".chatReed").remove();
 	            		$(".chat-"+key+" .chatWindowContent").scrollTop($(".chat-"+key+" .chatWindowContent")[0].scrollHeight);
@@ -423,8 +434,10 @@ var EQdkpChat = new function(){
 				//group icon
 				//icon = '<i class="fa fa-group"  style="vertical-align: middle;"></i> ';
 			}
-			
-			var html = '<div class="chatWindowContainer chat-'+key+'" data-chat-id="'+key+'" data-user-count="'+count+'" data-opened="1"><div class="chatWindow"><div class="chatWindowHeader"><span>'+icon+title+'</span><i class="fa fa-times floatRight hand" onclick="EQdkpChat.closeConversation(\''+key+'\')" style="margin-right: -5px; margin-left: 5px;"></i><i class="fa fa-plus floatRight hand" onclick="EQdkpChat.addUser(\''+key+'\')"></i></div><div class="chatWindowAddUser" style="display:none;"><input type="text" class="demo-input-local" name="blah" /><button type="button" onclick="EQdkpChat.addUserSubmit(\''+key+'\');"><i class="fa fa-check"></i> Absenden</button></div><div class="chatWindowContent"><span class="chatMessages-'+key+'"></span><div class="clear"></div></div><div class="chatInput"><textarea id="chatInput-'+key+'" class="chatInputSubmit" style="overflow: hidden; word-wrap: break-word; resize: none;"></textarea></div><div class="clear"></div><div class="chatLastMessage-'+key+'" style="display:none;">0</div><div class="chatLastMessageByMe-'+key+'" style="display:none;">0</div></div></div>';				
+			if(count > 2){
+				var leave = '<br /><a href="javascript:EQdkpChat.leaveConversation(\''+key+'\')"><i class="fa fa-user-times"></i> Leave Conversation</a>';
+			} else var leave = '';
+			var html = '<div class="chatWindowContainer chat-'+key+'" data-chat-id="'+key+'" data-user-count="'+count+'" data-opened="1"><div class="chatWindow"><div class="chatWindowHeader"><span>'+icon+title+'</span><i class="fa fa-times floatRight hand" onclick="EQdkpChat.closeConversation(\''+key+'\')" style="margin-right: -5px; margin-left: 5px;"></i><i class="fa fa-user-plus floatRight hand" onclick="EQdkpChat.addUser(\''+key+'\')"></i></div><div class="chatWindowAddUser" style="display:none;"><input type="text" class="demo-input-local" name="blah" /><button type="button" onclick="EQdkpChat.addUserSubmit(\''+key+'\');"><i class="fa fa-check"></i> Absenden</button><br />'+leave+'</div><div class="chatWindowContent"><span class="chatMessages-'+key+'"></span><div class="clear"></div></div><div class="chatInput"><textarea id="chatInput-'+key+'" class="chatInputSubmit" style="overflow: hidden; word-wrap: break-word; resize: none;"></textarea></div><div class="clear"></div><div class="chatLastMessage-'+key+'" style="display:none;">0</div><div class="chatLastMessageByMe-'+key+'" style="display:none;">0</div></div></div>';				
 			$("#chatWindowList").append(html);
 		}
 	}
