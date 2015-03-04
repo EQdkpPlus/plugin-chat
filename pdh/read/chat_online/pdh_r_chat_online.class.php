@@ -75,9 +75,10 @@ if (!class_exists('pdh_r_chat_online'))
       $sql = 'SELECT s.session_user_id, s.session_current
                 FROM __sessions s
       			WHERE s.session_user_id != -1
+      			AND s.session_current > ?
                 GROUP BY s.session_user_id
                 ORDER BY s.session_current DESC';
-      $result = $this->db->query($sql);
+      $result = $this->db->prepare($sql)->execute($this->time->time-600);
       if ($result)
       {
 
