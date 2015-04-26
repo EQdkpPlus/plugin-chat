@@ -1,3 +1,27 @@
+/* LESS VARS */
+@chatWindowBorder: #d0d0d0;
+@chatWindowColor: #000;
+@chatWindowBackgroundColor: #f9f9f9;
+@chatWindowHeaderBackgroundColor: #b0b0b0; 
+@chatWindowHeaderColor: #fff;
+@chatWindowInactiveBackgroundColor: #b0b0b0;
+@chatWindowActiveHeaderBackgroundColor: #2E78B0;
+
+@chatMessageColor: #d2d2d2;
+@chatMessageBorderColor: #d2d2d2;
+@chatMessageBackgroundColor: #f6f7f8;
+@chatMineMessageColor: #d2d2d2;
+@chatMineMessageBorderColor: #bdc9d4;
+@chatMineMessageBackgroundColor: #dbedfe;
+@chatTimeColor: #afafaf;
+
+@chatPostBorder: #F1F0F0;
+@chatNewPostBackgroundColor: #fff8c0;
+@chatBlinkingHeader1: lighten(@chatWindowActiveHeaderBackgroundColor, 15);
+@chatBlinkingHeader2: darken(@chatWindowActiveHeaderBackgroundColor, 10);
+/* END LESS VARS */
+
+
 .chatContainer {
 	position:fixed;
 	bottom: 0;
@@ -14,15 +38,15 @@
 }
 
 .chatWindowMin {
-    border-right:1px solid #d0d0d0;
-	border-left:1px solid #d0d0d0;
-	border-top:1px solid #d0d0d0;
+    border-right:1px solid @chatWindowBorder;
+	border-left:1px solid @chatWindowBorder;
+	border-top:1px solid @chatWindowBorder;
     text-align: center;
     padding: 10px 20px;
-	background-color: #f9f9f9;
+	background-color: @chatWindowBackgroundColor;
 	cursor: pointer;
 	margin-left: 10px;
-	color: #000;
+	color: @chatWindowColor;
 }
 
 .chatWindowContainer {
@@ -33,15 +57,15 @@
 }
 
 .chatWindowHeader, .chatWindowHeader2, .chatWindowHeaderInactive  {
-	background-color: #b0b0b0;
-	color: #fff;
+	background-color: @chatWindowHeaderBackgroundColor;
+	color: @chatWindowHeaderColor;
 	padding: 5px 10px;
 	height: 16px;
 	overflow: hidden;
 }
 
 .chatWindowHeaderInactive{
-	background-color: #b0b0b0 !important;
+	background-color: @chatWindowInactiveBackgroundColor !important;
 }
 
 .chatWindowHeader span, .chatWindowHeaderInactive span {
@@ -60,14 +84,11 @@
 }
 
 .active .chatWindowHeader, #chatMenu .chatWindowHeader2 {
-	background-color: #2E78B0 !important;
+	background-color: @chatWindowActiveHeaderBackgroundColor !important;
 }
 
-
-
-
 .chatOnlineSeperator {
-	border-bottom: 1px solid #D0D0D0;
+	border-bottom: 1px solid @chatWindowBorder;
     line-height: 0;
     margin: 0 0 2px;
     min-height: 1px !important;
@@ -88,7 +109,7 @@
 }
 
 .chatOnlineList .hand:hover {
-	color: #000;
+	color: @chatWindowColor;
 }
 
 .chat_last_online {
@@ -100,10 +121,10 @@
 	margin-left: -1px;
 	position: absolute;
 	width: 240px;
-	border-right:1px solid #d0d0d0;
-	border-left:1px solid #d0d0d0;
-	border-top:1px solid #d0d0d0;
-	background-color: #f9f9f9;
+	border-right:1px solid @chatWindowBorder;
+	border-left:1px solid @chatWindowBorder;
+	border-top:1px solid @chatWindowBorder;
+	background-color: @chatWindowBackgroundColor;
 }
 
 .chatWindowContent, .chatWindowAddUser {
@@ -122,7 +143,7 @@
 	max-height: 400px;
 	overflow-y: auto;
 	padding-right: 10px;
-	color: #000;
+	color: @chatWindowColor;
 }
 					
 .chat_user_avatar img, .chatAvatar img {
@@ -139,7 +160,7 @@
 }
 
 .chatInput {
-	border-top: 1px solid #d0d0d0;
+	border-top: 1px solid @chatWindowBorder;
 	overflow:hidden;
 	position: absolute;
 	width: 240px;
@@ -186,13 +207,13 @@
     white-space: pre-wrap;
 	margin-top: -4px;
 	font-size: 12px;
-	color: #000;
+	color: @chatWindowColor;
 	text-align: left;
 	clear: both;
 	position: relative;
 	border-radius: 4px;
-	border: 1px solid #d2d2d2;
-	background-color: #f6f7f8;
+	border: 1px solid @chatMessageBorderColor;
+	background-color: @chatMessageBackgroundColor;
 	margin-left: 8px;
 	margin-right: 8px;
 }
@@ -204,7 +225,7 @@
 	left: -11px;
 	border-style: solid;
 	border-width: 7px 11px 7px 0;
-	border-color: transparent #d2d2d2;
+	border-color: transparent @chatMessageColor;
 	display: block;
 	width: 0;
 	z-index: 0;
@@ -218,7 +239,7 @@
 	left: -10px;
 	border-style: solid;
 	border-width: 6px 10px 6px 0;
-	border-color: transparent #f6f7f8;
+	border-color: transparent @chatMessageBackgroundColor;
 	display: block;
 	width: 0;
 	z-index: 1;
@@ -226,11 +247,11 @@
 }
 
 .mine .chatMessage {
-	background-color: #dbedfe;
+	background-color: @chatMineMessageBackgroundColor;
 	margin-right: 8px;
 	position: relative;
 	border-radius: 4px;
-	border: 1px solid #bdc9d4;
+	border: 1px solid @chatMineMessageBorderColor;
 }
 
 .mine .chatMessage:before {
@@ -240,7 +261,7 @@
 	left: 100%;
 	border-style: solid;
 	border-width: 7px 0 7px 11px;
-	border-color: transparent #bdc9d4;
+	border-color: transparent @chatMineMessageBorderColor;
 	display: block;
 	width: 0;
 	z-index: 0;
@@ -254,7 +275,7 @@
 	left: 100%;
 	border-style: solid;
 	border-width: 6px 0 6px 10px;
-	border-color: transparent #dbedfe;
+	border-color: transparent @chatMineMessageBackgroundColor;
 	display: block;
 	width: 0;
 	z-index: 1;
@@ -262,27 +283,27 @@
 }
 
 .chatTime {
-    color: #afafaf;
+    color: @chatTimeColor;
     float: right;
     font-size: 9px;
     padding-right: 8px;
 }
 
 .chatUsername {
-    color: #afafaf;
+    color: @chatTimeColor;
     float: left;
     font-size: 9px;
     padding-left: 8px;
 }
 
 .chatPost {
-	border-top: 1px solid #F1F0F0;
+	border-top: 1px solid @chatPostBorder;
 	margin-top: 2px;
 	margin-bottom: 2px;
 }
 
 .chatNewPost {
-	background-color: #fff8c0;
+	background-color: @chatNewPostBackgroundColor;
 }
 
 /* Example tokeninput style #2: Facebook style */
@@ -299,7 +320,8 @@ ul.token-input-list-facebook {
     padding: 0;
     list-style-type: none;
     clear: left;
-	border: 1px solid #8496ba;
+	border: 1px solid @eqdkpInputBorderColor;
+	background-color: @eqdkpInputBackgroundColor;
 }
 
 ul.token-input-list-facebook li input {
@@ -310,7 +332,7 @@ ul.token-input-list-facebook li input {
     -webkit-appearance: caret;
 	border-radius: 0px;
 	box-shadow:none !important;
-	background-color: #F9F9F9;
+	background-color: @eqdkpInputBackgroundColor;
 }
 
 li.token-input-token-facebook {
@@ -466,28 +488,28 @@ div.token-input-dropdown-facebook ul li.token-input-selected-dropdown-item-faceb
 }
  
 @-webkit-keyframes blinkingHeader {
-    0% {background-color: #4086D4;}
-    50% {background-color: #2B619C;}
-    100% {background-color: #4086D4;}
+    0% {background-color: @chatBlinkingHeader1;}
+    50% {background-color: @chatBlinkingHeader2;}
+    100% {background-color: @chatBlinkingHeader1;}
 }
 @keyframes blinkingHeader {
-    0% {background-color: #4086D4;}
-    50% {background-color: #2B619C;}
-    100% {background-color: #4086D4;}
+    0% {background-color: @chatBlinkingHeader1;}
+    50% {background-color: @chatBlinkingHeader2;}
+    100% {background-color: @chatBlinkingHeader1;}
 }
 
 .noNewPost {
 	-webkit-animation: noNewPost 1s;
 	animation: noNewPost 1s;
 	animation-iteration-count: 1;
-	background-color: #f9f9f9;
+	background-color: @chatWindowBackgroundColor;
 }
 
 @-webkit-keyframes noNewPost {
-	from {background-color: #fff8c0;}
-    to {background-color: #f9f9f9;}
+	from {background-color: @chatNewPostBackgroundColor;}
+    to {background-color: @chatWindowBackgroundColor;}
 }
 @keyframes noNewPost {
-    from {background-color: #fff8c0;}
-    to {background-color: #f9f9f9;}
+    from {background-color: @chatNewPostBackgroundColor;}
+    to {background-color: @chatWindowBackgroundColor;}
 }
