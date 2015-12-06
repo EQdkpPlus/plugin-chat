@@ -1,3 +1,19 @@
+var entityMap = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': '&quot;',
+    "'": '&#39;',
+    "/": '&#x2F;'
+  };
+
+  function escapeHtml(string) {
+    return String(string).replace(/[&<>"'\/]/g, function (s) {
+      return entityMap[s];
+    });
+  }
+
+
 var EQdkpChat = new function(){
 	var windowFocus = true;
 	var oldtitle = document.title;
@@ -344,7 +360,7 @@ var EQdkpChat = new function(){
             	
 	            	if (value != "\n"){
 	            		$.post(mmocms_root_path+ "plugins/chat/ajax.php"+mmocms_sid+"&save", { key: key, txt: value });
-	            		var html = '<div class="chatPost chatTmpPost mine"><div class="chatAvatar"><i class="fa-spin fa fa-spinner fa-lg"></i></div><div class="chatMsgContainer"><div class="chatTime">now</div><div class="chatMessage">'+value+'</div></div><div class="clear"></div></div>';
+	            		var html = '<div class="chatPost chatTmpPost mine"><div class="chatAvatar"><i class="fa-spin fa fa-spinner fa-lg"></i></div><div class="chatMsgContainer"><div class="chatTime">now</div><div class="chatMessage">'+escapeHtml(value)+'</div></div><div class="clear"></div></div>';
 	            		$(".chatMessages-"+key).append(html);
 	            		$(".chat-"+key).find(".chatReed").remove();
 	            		$(".chat-"+key+" .chatWindowContent").scrollTop($(".chat-"+key+" .chatWindowContent")[0].scrollHeight);
