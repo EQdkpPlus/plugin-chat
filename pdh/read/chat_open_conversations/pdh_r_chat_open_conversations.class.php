@@ -90,12 +90,14 @@ if (!class_exists('pdh_r_chat_open_conversations'))
             'user_id'			=> (int)$row['user_id'],
 			'conversation_key'	=> $row['conversation_key'],
 			'open'				=> (int)$row['open'],
+          	'minimized'			=> (int)$row['minimized'],
           );
 
           $this->user_data[(int)$row['user_id']][$row['conversation_key']] =  array(
             'user_id'			=> (int)$row['user_id'],
 			'conversation_key'	=> $row['conversation_key'],
 			'open'				=> (int)$row['open'],
+          	'minimized'			=> (int)$row['minimized'],
           );
         }
 

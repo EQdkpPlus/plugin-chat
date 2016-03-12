@@ -47,10 +47,7 @@ if (!class_exists('pdh_r_chat_messages'))
      */
     public function reset()
     {
-		$this->pdc->del('pdh_chat_messages_table');
-		$this->pdc->del('pdh_chat_messages_userdata');
-		$this->data = NULL;
-		$this->user_data = NULL;
+
     }
 
     /**
@@ -61,50 +58,6 @@ if (!class_exists('pdh_r_chat_messages'))
      */
     public function init()
     {
-      return true;
-      
-      
-      
-      // try to get from cache first
-      $this->data = $this->pdc->get('pdh_chat_messages_table');
-      $this->user_data = $this->pdc->get('pdh_chat_messages_userdata');
-      
-      if($this->data !== NULL)
-      {
-        return true;
-      }
-
-      // empty array as default
-      $this->data = array();
-      $this->user_data = array();
-
-      // read all chat_messages entries from db
-      $sql = 'SELECT
-               *
-              FROM `__chat_messages`
-              ORDER BY id ASC;';
-      $result = $this->db->query($sql);
-      if ($result)
-      {
-
-        // add row by row to local copy
-        while ($row = $result->fetchAssoc())
-        {
-          $this->data[$row['conversation_key']] = array(
-            'user_id'			=> (int)$row['user_id'],
-			'conversation_key'	=> $row['conversation_key'],
-			'open'				=> (int)$row['open'],
-          );
-
-          $this->user_data[(int)$row['user_id']][$row['conversation_key']] =  $this->data[$row['conversation_key']];
-        }
-
-      }
-
-      // add data to cache
-      $this->pdc->put('pdh_chat_messages_table', $this->data, null);
-      $this->pdc->put('pdh_chat_messages_userdata', $this->user_data, null);
-
       return true;
     }
 
@@ -121,6 +74,15 @@ if (!class_exists('pdh_r_chat_messages'))
         return array_keys($this->data);
       }
       return array();
+    }
+    
+    public function get_id($intMessageID){
+    	$objQuery = $this->db->prepare("SELECT * FROM `__chat_messages` WHERE id=?")->execute($intMessageID);
+    	if($objQuery){
+    		$arrResult = $objQuery->fetchAssoc();
+    		return $arrResult;
+    	}
+    	return false;
     }
 
 	

@@ -36,6 +36,14 @@ $lang = array(
 	'chat_user_online'			=> 'Benutzer online',
 	'chat_conversation'		=> 'Konversation',
 	'chat_no_unread'		=> 'Keine ungelesenen Nachrichten',
+	'chat_not_installed'	=> 'Das Chat-Plugin ist nicht installiert.',
+		
+	'chat_fs_ajax'			=> 'Ajax',
+	'chat_f_reload_chat'	=> 'Reloadzeit Nachrichten',
+	'chat_f_help_reload_chat'	=> 'In Sekunden',
+	'chat_f_reload_onlinelist' => 'Reloadzeit Onlineliste',
+	'chat_f_help_reload_onlinelist'	=> 'In Minuten',
+	'chat_mod_pub'			=> 'Moderator des öffentlichen Chats',
  );
 
 ?>

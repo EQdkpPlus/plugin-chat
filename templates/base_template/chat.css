@@ -71,7 +71,7 @@
 .chatWindowHeader span, .chatWindowHeaderInactive span {
 	display: block;
     float: left;
-    width: 190px;
+    width: 180px;
     overflow: hidden;
 }
 
@@ -512,4 +512,25 @@ div.token-input-dropdown-facebook ul li.token-input-selected-dropdown-item-faceb
 @keyframes noNewPost {
     from {background-color: @chatNewPostBackgroundColor;}
     to {background-color: @chatWindowBackgroundColor;}
+}
+
+.chatMaxConvIcon {
+	display:none !important;
+}
+
+.chatMinimized .chatMaxConvIcon {
+	display: inline !important;
+}
+
+.chatMinimized .chatMinConvIcon, .chatMinimized .chatWindowContent, .chatMinimized .chatInput{
+	display:none;
+}
+
+.chatMinimized .chatWindow, .chatWindowMenu {
+	height: 25px;
+}
+
+.chatDeleteContainer {
+	float: right;
+    margin-left: 5px;
 }

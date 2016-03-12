@@ -1,0 +1,29 @@
+<div class="breadcrumb-container">
+	<ul class="breamcrumb">
+		<li><a href="{EQDKP_CONTROLLER_PATH}{SID}" title="{L_home}"><i class="fa fa-home"></i></a></li>
+		<li><a href="{EQDKP_ROOT_PATH}admin/{SID}">{L_menu_admin_panel}</a>
+		<li class="current"><a>{L_chat}: {L_settings}</a></li>
+	</ul>
+	<div class="clear"></div>
+</div>
+<form name="sb_settings" action="{ACTION}" method="post">
+	<!-- BEGIN fieldsets -->
+	<fieldset class="settings">
+		<legend>{fieldsets.NAME}</legend>
+
+		<!-- BEGIN fields -->
+		<dl>
+			<dt><label>{fieldsets.fields.NAME}</label><br /><span>{fieldsets.fields.HELP}</span></dt>
+			<dd>{fieldsets.fields.FIELD}{fieldsets.fields.TEXT}</dd>
+		</dl>
+		<!-- END fields -->
+	</fieldset>
+	<!-- END fieldsets -->
+	
+{CSRF_TOKEN}
+
+<div class="contentFooter">
+	<button class="mainoption" type="submit" name="save" ><i class="fa fa-check"></i>{L_save}</button>
+	<button class="liteoption" type="reset" name="reset"><i class="fa fa-trash-o"></i>{L_reset}</button>
+</div>
+</form>

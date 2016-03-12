@@ -42,7 +42,13 @@ if (!class_exists('chat_portal_hook'))
 			$this->tpl->js_file($this->root_path.'plugins/chat/includes/js/jquery.tokeninput.js');
 			$this->tpl->js_file($this->root_path.'plugins/chat/includes/js/chat.js');
 			$this->tpl->css_file($this->root_path.'plugins/chat/templates/base_template/chat.css');
-			$this->tpl->add_js("EQdkpChat.init();
+			
+			//In Secods
+			$intReloadTime = ($this->config->get('reload_chat', 'chat')) ? $this->config->get('reload_chat', 'chat') : 5;
+			//In Minutes
+			$intReloadOnlineList = ($this->config->get('reload_onlinelist', 'chat')) ? $this->config->get('reload_onlinelist', 'chat') : 5;
+			
+			$this->tpl->add_js("EQdkpChat.init(".$intReloadTime.", ".$intReloadOnlineList.", ".(($this->user->check_auth('u_chat_mod_pub', false)) ? 1 : 0).");
 				$('.chat-tooltip-trigger').on('click', function(event){
 					$('#chat-tooltip').show('fast');
 					$('.chatTooltipRemove').remove();

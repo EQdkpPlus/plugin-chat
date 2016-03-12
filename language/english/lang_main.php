@@ -36,6 +36,13 @@ $lang = array(
 	'chat_user_online'			=> 'User online',
 	'chat_conversation'			=> 'Conversation',
 	'chat_no_unread'			=> 'No unread messages',
+		
+	'chat_fs_ajax'			=> 'Ajax',
+	'chat_f_reload_chat'	=> 'Reloadtime chat',
+	'chat_f_help_reload_chat'	=> 'In seconds',
+	'chat_f_reload_onlinelist' => 'Reloadtime online list',
+	'chat_f_help_reload_onlinelist'	=> 'In minutes',
+	'chat_mod_pub'			=> 'Moderator of public chat',
  );
 
 ?>

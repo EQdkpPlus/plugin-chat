@@ -29,8 +29,11 @@ class AjaxChat extends page_generic {
 			'userlist'			=> array('process' => 'get_userlist'),
 			'openConversation'	=> array('process' => 'openConversation'),
 			'closeConversation'	=> array('process' => 'closeConversation'),
+			'minConversation'	=> array('process' => 'minConversation'),
+			'maxConversation'	=> array('process' => 'maxConversation'),
 			'loadOpenConversations'	=> array('process' => 'loadOpenConversations'),
 			'save'				=> array('process' => 'saveMessage'),
+			'delete'			=> array('process' => 'deleteMessage'),
 			'markRead'			=> array('process' => 'markRead'),
 			'checkNew'			=> array('process' => 'checkNew'),
 			'getUser'			=> array('process' => 'getUser'),
@@ -105,6 +108,34 @@ class AjaxChat extends page_generic {
 		}
 	}
 	
+	public function minConversation(){
+		if ($this->in->get('key') != ""){
+			$this->pdh->put("chat_open_conversations", "minConversation", array($this->in->get('key'), $this->user->id));
+			$this->pdh->process_hook_queue();
+		}
+	}
+	
+	public function maxConversation(){
+		if ($this->in->get('key') != ""){
+			$this->pdh->put("chat_open_conversations", "maxConversation", array($this->in->get('key'), $this->user->id));
+			$this->pdh->process_hook_queue();
+		}
+	}
+	
+	public function deleteMessage(){
+		if($this->in->get('msg', 0)){
+			//Get Message Details:
+			$intMessageID = $this->in->get('msg', 0);
+			$arrResult = $this->pdh->get('chat_messages', 'id', array($intMessageID));
+			if($arrResult){
+				$strChatID = $arrResult['conversation_key'];
+				if($strChatID == 'guildchat' && $this->user->check_auth('u_chat_mod_pub', false)){
+					$this->pdh->put('chat_messages', 'deleteMessage', array($intMessageID));
+				}
+			}
+		}
+	}
+	
 	public function loadOpenConversations(){
 		header('Content-type: application/json; charset=UTF-8');
 		$arrOpen = $this->pdh->get('chat_open_conversations', 'openUserConversations', array($this->user->id));
@@ -115,6 +146,7 @@ class AjaxChat extends page_generic {
 					'key'	=> $val['conversation_key'],
 					'title' => $this->pdh->get('chat_conversations', 'title', array($val['conversation_key'])),
 					'count' => count($this->pdh->get('chat_conversations', 'user', array($val['conversation_key']))),
+					'minimized' => $val['minimized'],
 				);
 			}
 		}

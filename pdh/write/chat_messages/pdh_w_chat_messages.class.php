@@ -29,6 +29,10 @@ if (!class_exists('pdh_w_chat_messages'))
   class pdh_w_chat_messages extends pdh_w_generic
   {
     
+  	
+  	
+  	
+  	
     public function addMessage($strConversationKey, $strText){
     	$strText = substr($strText, 0, -1);
     	$objQuery = $this->db->prepare("INSERT INTO __chat_messages :p")->set(array(
@@ -38,14 +42,16 @@ if (!class_exists('pdh_w_chat_messages'))
     			'date'				=> $this->time->time,
     			'reed'				=> 0,
     	))->execute();
-    	
-    	//TODO: Open Conversation for all User if not open
     }
     
     public function markRead($strConversationKey){
     	$objQuery = $this->db->prepare("UPDATE __chat_messages :p WHERE conversation_key=? AND user_id != ?")->set(array(
     			'reed'				=> 1
     	))->execute($strConversationKey, $this->user->id);
+    }
+    
+    public function deleteMessage($intMessageID){
+    	$objQuery = $this->db->prepare("DELETE FROM __chat_messages WHERE id=?")->execute($intMessageID);
     }
 
   } //end class

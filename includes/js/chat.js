@@ -21,6 +21,8 @@ var EQdkpChat = new function(){
 	var unreadChats = new Array();
 	var onlineUsers = new Array();
 	var mybreak = false;
+	var minimizeLock = false;
+	var blnIsPubMod = false;
 	
 	var check_new_interval, onlinelist_interval;
 	
@@ -65,14 +67,15 @@ var EQdkpChat = new function(){
 	
 	this.loadOnlineList = loadOnlineList;
 	
-	this.init = function () {
-		
+	this.init = function (intReloadTime, intRelodOnlinelist, isPubMod) {	
 		loadOnlineList();
 		loadOpenConversations();
 		$(document).ready(function(){
-			check_new_interval = window.setInterval("EQdkpChat.checkNew()", 5000);
-			onlinelist_interval = window.setInterval("EQdkpChat.loadOnlineList()", 1000*60*5);
+			check_new_interval = window.setInterval("EQdkpChat.checkNew()", 1000*intReloadTime); //Seconds
+			onlinelist_interval = window.setInterval("EQdkpChat.loadOnlineList()", 1000*60*intRelodOnlinelist); //Minutes
 		})
+		
+		blnIsPubMod = isPubMod;
 		
 		bindActions();
 		
@@ -137,6 +140,16 @@ var EQdkpChat = new function(){
 	this.closeConversation = function (key){
 		$(".chatContainer div[data-chat-id=\'"+key+"\']").remove();
 		$.get(mmocms_root_path+ "plugins/chat/ajax.php"+mmocms_sid+"&closeConversation&key="+key);
+	}
+	
+	this.minConversation = function (key){
+		$.get(mmocms_root_path+ "plugins/chat/ajax.php"+mmocms_sid+"&minConversation&key="+key);
+		minimizeConversation(key);
+	}
+	
+	this.deleteMessage = function (messageID){
+		$("div[data-post-id=\'"+messageID+"\']").remove();
+		$.get(mmocms_root_path+ "plugins/chat/ajax.php"+mmocms_sid+"&delete&msg="+messageID);
 	}
 	
 	this.markAsRead = markAsRead;
@@ -265,8 +278,10 @@ var EQdkpChat = new function(){
 					} else {
 						var newpost = "";								
 					}
+					var deleteIcon = (key == 'guildchat' && blnIsPubMod) ? '<span class="chatDeleteContainer"><i class="hand fa fa-times-circle icon-grey" onclick="EQdkpChat.deleteMessage('+v.id+')"></i></span>' : '';
+					
 					if(v.user_id == mmocms_userid) { var mine = ' mine'; } else { var mine = ''; }
-					var html = '<div class="chatPost'+newpost+mine+'" data-post-id="'+v.id+'"><div class="chatAvatar" title="'+v.username+'"><a href="'+v.profile+'">'+v.avatar+'</a></div><div class="chatMsgContainer"><div class="chatUsername">'+v.username+'</div><div class="chatTime">'+v.date+'</div><div class="chatMessage">'+v.text+'</div></div><div class="clear"></div></div>';
+					var html = '<div class="chatPost'+newpost+mine+'" data-post-id="'+v.id+'"><div class="chatAvatar" title="'+v.username+'"><a href="'+v.profile+'">'+v.avatar+'</a></div><div class="chatMsgContainer"><div class="chatUsername">'+v.username+'</div><div class="chatTime">'+v.date+'</div><div class="chatMessage">'+deleteIcon+v.text+'</div></div><div class="clear"></div></div>';
 					$(".chatBigContainer .chatMessages-"+key).append(html);
 				}
 			});						
@@ -330,6 +345,16 @@ var EQdkpChat = new function(){
 	function bindActions(){
 		$(".chatWindow").on("click", function(e){
 			focusWindow(this);
+			
+			var parent = $(this).parent();
+			if(parent.hasClass('chatMinimized')){
+				var key = $(this).parent().attr("data-chat-id");
+
+				if(key != minimizeLock){
+					maximizeConversation(key);
+				}
+			}
+			minimizeLock = false;
 		});
 		
 		$(".chatWindowHeader span").on("dblclick", function(e){
@@ -421,7 +446,7 @@ var EQdkpChat = new function(){
 		$.get(mmocms_root_path+ "plugins/chat/ajax.php"+mmocms_sid+"&loadOpenConversations", function(data){
 			unfocusAllWindows();
 			$.each(data, function(key, v){
-				openChatWindow(key, v.title, v.count);
+				openChatWindow(key, v.title, v.count, v.minimized);
 				$.post(mmocms_root_path+ "plugins/chat/ajax.php"+mmocms_sid+"&loadLatestMessages", { key: key}, function(data){
 					var unread = addMessages(key, data, 1);
 					$(".chat-"+key).removeAttr("data-opened");
@@ -436,7 +461,7 @@ var EQdkpChat = new function(){
 		});
 	}
 	
-	function openChatWindow(key, title, count){
+	function openChatWindow(key, title, count, minimized){
 		if ($("#chatWindowList").find(".chat-"+key).length == 0){
 			var icon = "";
 
@@ -453,7 +478,9 @@ var EQdkpChat = new function(){
 			if(count > 2){
 				var leave = '<br /><a href="javascript:EQdkpChat.leaveConversation(\''+key+'\')"><i class="fa fa-user-times"></i> Leave Conversation</a>';
 			} else var leave = '';
-			var html = '<div class="chatWindowContainer chat-'+key+'" data-chat-id="'+key+'" data-user-count="'+count+'" data-opened="1"><div class="chatWindow"><div class="chatWindowHeader"><span>'+icon+title+'</span><i class="fa fa-times floatRight hand" onclick="EQdkpChat.closeConversation(\''+key+'\')" style="margin-right: -5px; margin-left: 5px;"></i><i class="fa fa-user-plus floatRight hand" onclick="EQdkpChat.addUser(\''+key+'\')"></i></div><div class="chatWindowAddUser" style="display:none;"><input type="text" class="demo-input-local" name="blah" /><button type="button" onclick="EQdkpChat.addUserSubmit(\''+key+'\');"><i class="fa fa-check"></i> Absenden</button><br />'+leave+'</div><div class="chatWindowContent"><span class="chatMessages-'+key+'"></span><div class="clear"></div></div><div class="chatInput"><textarea id="chatInput-'+key+'" class="chatInputSubmit" style="overflow: hidden; word-wrap: break-word; resize: none;"></textarea></div><div class="clear"></div><div class="chatLastMessage-'+key+'" style="display:none;">0</div><div class="chatLastMessageByMe-'+key+'" style="display:none;">0</div></div></div>';				
+			
+			var minClass = (minimized) ? ' chatMinimized' : '';
+			var html = '<div class="chatWindowContainer chat-'+key+minClass+'" data-chat-id="'+key+'" data-user-count="'+count+'" data-opened="1"><div class="chatWindow"><div class="chatWindowHeader"><span>'+icon+title+'</span><i class="fa fa-times floatRight hand" onclick="EQdkpChat.closeConversation(\''+key+'\')" style="margin-right: -5px; margin-left: 5px;"></i><i class="fa fa-angle-down floatRight hand chatMinConvIcon" onclick="EQdkpChat.minConversation(\''+key+'\')" style="margin-right: 0px; margin-left: 5px;"></i><i class="fa fa-user-plus floatRight hand" onclick="EQdkpChat.addUser(\''+key+'\')"></i></div><div class="chatWindowAddUser" style="display:none;"><input type="text" class="demo-input-local" name="blah" /><button type="button" onclick="EQdkpChat.addUserSubmit(\''+key+'\');"><i class="fa fa-check"></i> Absenden</button><br />'+leave+'</div><div class="chatWindowContent"><span class="chatMessages-'+key+'"></span><div class="clear"></div></div><div class="chatInput"><textarea id="chatInput-'+key+'" class="chatInputSubmit" style="overflow: hidden; word-wrap: break-word; resize: none;"></textarea></div><div class="clear"></div><div class="chatLastMessage-'+key+'" style="display:none;">0</div><div class="chatLastMessageByMe-'+key+'" style="display:none;">0</div></div></div>';				
 			$("#chatWindowList").append(html);
 		}
 	}
@@ -484,5 +511,16 @@ var EQdkpChat = new function(){
 	function blinkHeader(key){
 		var header = $(".chat-"+key+" .chatWindowHeader");
 		$(header).addClass('blinkingHeader');
+	}
+	
+	function minimizeConversation(key){
+		minimizeLock = key;
+		$(".chat-"+key).addClass('chatMinimized');
+		$(".chat-"+key).removeAttr("data-opened");
+	}
+	
+	function maximizeConversation(key){
+		$(".chat-"+key).removeClass('chatMinimized');
+		$.get(mmocms_root_path+ "plugins/chat/ajax.php"+mmocms_sid+"&maxConversation&key="+key);
 	}
 };

@@ -58,6 +58,28 @@ if (!class_exists('pdh_w_chat_open_conversations'))
     	$this->pdh->enqueue_hook('chat_open_conversations_update');
     }
     
+    public function minConversation($strConversationKey, $intUserID){
+    	$objQuery = $this->db->prepare("REPLACE INTO __chat_open_conversations :p")->set(array(
+    			'user_id'			=> $intUserID,
+    			'conversation_key'	=> $strConversationKey,
+    			'open'				=> 1,
+    			'minimized'			=> 1,
+    	))->execute();
+    
+    	$this->pdh->enqueue_hook('chat_open_conversations_update');
+    }
+    
+    public function maxConversation($strConversationKey, $intUserID){
+    	$objQuery = $this->db->prepare("REPLACE INTO __chat_open_conversations :p")->set(array(
+    			'user_id'			=> $intUserID,
+    			'conversation_key'	=> $strConversationKey,
+    			'open'				=> 1,
+    			'minimized'			=> 0,
+    	))->execute();
+    
+    	$this->pdh->enqueue_hook('chat_open_conversations_update');
+    }
+    
     public function archiveConversation($strConversationKey, $intUserID){
     	$this->db->prepare("DELETE FROM __chat_open_conversations WHERE conversation_key=? AND user_id=?")->execute($strConversationKey, $intUserID);
     	$this->pdh->enqueue_hook('chat_open_conversations_update');

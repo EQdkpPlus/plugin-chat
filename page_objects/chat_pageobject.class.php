@@ -70,7 +70,7 @@ class chat_pageobject extends pageobject
   								<div class="chatMsgContainer">
   									<div class="chatUsername">'.$strUsername.'</div>
   									<div class="chatTime">'.$this->time->user_date((int)$row['date'], true).'</div>
-  									<div class="chatMessage">'.nl2br($this->bbcode->MyEmoticons($row['text'])).'</div><div class="clear"></div>
+  									<div class="chatMessage">'.(($this->user->check_auth('u_chat_mod_pub', false)) ? '<span class="chatDeleteContainer"><i class="hand fa fa-times-circle icon-grey" title="'.$this->user->lang('delete').'" onclick="EQdkpChat.deleteMessage('.(int)$row['id'].')"></i></span>' : '').nl2br($this->bbcode->MyEmoticons($row['text'])).'</div><div class="clear"></div>
   								</div>
   							</div>';
 			}

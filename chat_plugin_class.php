@@ -29,10 +29,9 @@ if (!defined('EQDKP_INC'))
 class chat extends plugin_generic
 {
 
-  public $version    = '0.2.2';
+  public $version    = '0.3.0';
   public $build      = '';
   public $copyright  = 'GodMod';
-  public $vstatus    = 'Alpha';
   
   protected static $apiLevel = 23;
 
@@ -69,6 +68,7 @@ class chat extends plugin_generic
     // ('a'/'u', Permission-Name, Enable? 'Y'/'N', Language string, array of user-group-ids that should have this permission)
     // Groups: 1 = Guests, 2 = Super-Admin, 3 = Admin, 4 = Member
 	$this->add_permission('u', 'view',    'Y', $this->user->lang('chat_view'),    array(2,3,4));
+	$this->add_permission('u', 'mod_pub',    'Y', $this->user->lang('chat_mod_pub'),    array(2,3));
     $this->add_permission('a', 'manage', 'N', $this->user->lang('manage'), array(2,3));
 	$this->add_permission('a', 'settings', 'N', $this->user->lang('menu_settings'), array(2,3));
 	
@@ -148,8 +148,7 @@ class chat extends plugin_generic
     */
   private function gen_admin_menu()
   {
-  	return array();
-  	
+
     $admin_menu = array (array(
         'name' => $this->user->lang('chat'),
         'icon' => 'fa-comments',
