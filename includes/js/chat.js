@@ -259,7 +259,7 @@ var EQdkpChat = new function(){
 		if (data && data.messages != undefined){
 			$.each(data.messages, function(k,v){
 				if ($(".chatContainer .chatMessages-"+key).find("div[data-post-id='"+v.id+"']").length == 0){				
-					if (v.reed == 0 && markUnread){
+					if (v.reed == 0 && markUnread && v.user_id != mmocms_userid){
 						var newpost = " chatNewPost";
 						unread = unread +1;
 					} else {
@@ -272,7 +272,7 @@ var EQdkpChat = new function(){
 				
 				//Now for Big Container
 				if ($(".chatBigContainer .chatMessages-"+key).find("div[data-post-id='"+v.id+"']").length == 0){				
-					if (v.reed == 0 && markUnread){
+					if (v.reed == 0 && markUnread && v.user_id != mmocms_userid){
 						var newpost = " chatNewPost";
 						unread = unread +1;
 					} else {
@@ -480,7 +480,7 @@ var EQdkpChat = new function(){
 			} else var leave = '';
 			
 			var minClass = (minimized) ? ' chatMinimized' : '';
-			var html = '<div class="chatWindowContainer chat-'+key+minClass+'" data-chat-id="'+key+'" data-user-count="'+count+'" data-opened="1"><div class="chatWindow"><div class="chatWindowHeader"><span>'+icon+title+'</span><i class="fa fa-times floatRight hand" onclick="EQdkpChat.closeConversation(\''+key+'\')" style="margin-right: -5px; margin-left: 5px;"></i><i class="fa fa-angle-down floatRight hand chatMinConvIcon" onclick="EQdkpChat.minConversation(\''+key+'\')" style="margin-right: 0px; margin-left: 5px;"></i><i class="fa fa-user-plus floatRight hand" onclick="EQdkpChat.addUser(\''+key+'\')"></i></div><div class="chatWindowAddUser" style="display:none;"><input type="text" class="demo-input-local" name="blah" /><button type="button" onclick="EQdkpChat.addUserSubmit(\''+key+'\');"><i class="fa fa-check"></i> Absenden</button><br />'+leave+'</div><div class="chatWindowContent"><span class="chatMessages-'+key+'"></span><div class="clear"></div></div><div class="chatInput"><textarea id="chatInput-'+key+'" class="chatInputSubmit" style="overflow: hidden; word-wrap: break-word; resize: none;"></textarea></div><div class="clear"></div><div class="chatLastMessage-'+key+'" style="display:none;">0</div><div class="chatLastMessageByMe-'+key+'" style="display:none;">0</div></div></div>';				
+			var html = '<div class="chatWindowContainer chat-'+key+minClass+'" data-chat-id="'+key+'" data-user-count="'+count+'" data-opened="1"><div class="chatWindow"><div class="chatWindowHeader"><span>'+icon+title+'</span><i class="fa fa-times floatRight hand" onclick="EQdkpChat.closeConversation(\''+key+'\')" style="margin-right: -5px; margin-left: 5px;"></i><i class="fa fa-chevron-down floatRight hand chatMinConvIcon" onclick="EQdkpChat.minConversation(\''+key+'\')" style="margin-right: 0px; margin-left: 5px;"></i><i class="fa fa-user-plus floatRight hand" onclick="EQdkpChat.addUser(\''+key+'\')"></i></div><div class="chatWindowAddUser" style="display:none;"><input type="text" class="demo-input-local" name="blah" /><button type="button" onclick="EQdkpChat.addUserSubmit(\''+key+'\');"><i class="fa fa-check"></i> Absenden</button><br />'+leave+'</div><div class="chatWindowContent"><span class="chatMessages-'+key+'"></span><div class="clear"></div></div><div class="chatInput"><textarea id="chatInput-'+key+'" class="chatInputSubmit" style="overflow: hidden; word-wrap: break-word; resize: none;"></textarea></div><div class="clear"></div><div class="chatLastMessage-'+key+'" style="display:none;">0</div><div class="chatLastMessageByMe-'+key+'" style="display:none;">0</div></div></div>';				
 			$("#chatWindowList").append(html);
 		}
 	}

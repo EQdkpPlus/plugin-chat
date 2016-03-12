@@ -71,7 +71,7 @@
 .chatWindowHeader span, .chatWindowHeaderInactive span {
 	display: block;
     float: left;
-    width: 180px;
+    width: 175px;
     overflow: hidden;
 }
 
@@ -95,6 +95,13 @@
     padding: 0 !important;
 }
 
+#chatOnlineSearch, #chatOnlineSearch:focus, #chatOnlineSearch:hover{
+	width: 90%;
+    border: none;
+    background: none;
+    box-shadow: none;
+    padding: 0;
+}
 
 .chatOnlineList li {
 	display: block;

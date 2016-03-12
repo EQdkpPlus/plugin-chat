@@ -29,12 +29,14 @@ if (!class_exists('pdh_w_chat_conversation_lastvisit'))
   class pdh_w_chat_conversation_lastvisit extends pdh_w_generic
   {
     
-    public function setLastVisit($strConversationKey){
+    public function setLastVisit($strConversationKey, $date=false){
     	$objQuery = $this->db->prepare("REPLACE INTO __chat_conversation_lastvisit :p")->set(array(
-    			'date'				=> $this->time->time,
+    			'date'				=> ($date) ? $date : $this->time->time,
     			'user_id'			=> $this->user->id,
     			'conversation_key'	=> $strConversationKey,
     	))->execute();
+    	
+    	$this->pdh->enqueue_hook('chat_conversation_lastvisit_update');
     }
 
   } //end class

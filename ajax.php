@@ -191,18 +191,20 @@ class AjaxChat extends page_generic {
 		if(count($arrOpen)) {
 			foreach($arrOpen as $k => $key){
 				$arrKey[$key] = $arrTimestamps[$k];
-			}		
-			
+			}
+	
 			$intMin = min($arrTimestamps);
 			$arrResult = $this->db->prepare("SELECT * FROM __chat_messages WHERE conversation_key :in AND date > ?")->in($arrOpen)->execute($intMin);			
 			if ($arrResult){
 				$objLatestVisits = $this->db->prepare("SELECT * FROM __chat_conversation_lastvisit WHERE conversation_key :in AND user_id=?")->in($arrOpen)->execute($this->user->id);
 				$arrLatestVisits = array();
-				if($arrLatestVisits){
+
+				if($objLatestVisits){
 					while($row = $objLatestVisits->fetchAssoc()){
 						$arrLatestVisits[$row['conversation_key']] = (int)$row['date'];
 					}
 				}
+				
 				$objUsers = $this->db->prepare("SELECT * FROM __chat_conversations WHERE conversation_key :in")->in($arrOpen)->execute();
 				$arrUserCount = array();
 				if($objUsers){
@@ -216,7 +218,6 @@ class AjaxChat extends page_generic {
 					if (!isset($arrNewMessages[$row['conversation_key']])){
 						$arrNewMessages[$row['conversation_key']] = array('messages' => array(), 'lasttime' => 0, 'lastbyme' => 0);
 					}
-					
 					$reed = ($arrUserCount[$row['conversation_key']] <= 2) ? (((int)$row['user_id'] == $this->user->id) ? 1 : (int)$row['reed']) : (($arrLatestVisits[$row['conversation_key']] >= (int)$row['date']) ? 1 : 0);
 					
 					$arrNewMessages[$row['conversation_key']]['messages'][] = array(

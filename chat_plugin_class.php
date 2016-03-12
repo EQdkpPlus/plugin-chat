@@ -29,7 +29,7 @@ if (!defined('EQDKP_INC'))
 class chat extends plugin_generic
 {
 
-  public $version    = '0.3.0';
+  public $version    = '0.3.1';
   public $build      = '';
   public $copyright  = 'GodMod';
   
