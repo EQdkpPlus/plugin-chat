@@ -541,3 +541,7 @@ div.token-input-dropdown-facebook ul li.token-input-selected-dropdown-item-faceb
 	float: right;
     margin-left: 5px;
 }
+
+.chatReed {
+	color: black;
+}

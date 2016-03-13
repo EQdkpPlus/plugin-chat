@@ -66,6 +66,12 @@ class chatAdminSettings extends page_generic {
 
 	private function fields(){
 		$arrFields = array(
+			'sounds' => array(
+				'new_message_sound' => array(
+					'type' => 'radio',
+					'default' => 1,
+				)	
+			),
 			'ajax' => array(
 				'reload_chat' => array(
 					'type'		=> 'spinner',

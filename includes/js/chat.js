@@ -23,6 +23,8 @@ var EQdkpChat = new function(){
 	var mybreak = false;
 	var minimizeLock = false;
 	var blnIsPubMod = false;
+	var blnStartupDone = false;
+	var arrOptions = new Array();
 	
 	var check_new_interval, onlinelist_interval;
 	
@@ -67,7 +69,7 @@ var EQdkpChat = new function(){
 	
 	this.loadOnlineList = loadOnlineList;
 	
-	this.init = function (intReloadTime, intRelodOnlinelist, isPubMod) {	
+	this.init = function (intReloadTime, intRelodOnlinelist, options) {	
 		loadOnlineList();
 		loadOpenConversations();
 		$(document).ready(function(){
@@ -75,8 +77,8 @@ var EQdkpChat = new function(){
 			onlinelist_interval = window.setInterval("EQdkpChat.loadOnlineList()", 1000*60*intRelodOnlinelist); //Minutes
 		})
 		
-		blnIsPubMod = isPubMod;
-		
+		blnIsPubMod = options.isModerator;
+		arrOptions = options;
 		bindActions();
 		
 		$(window).focus($.proxy(function() {
@@ -221,6 +223,7 @@ var EQdkpChat = new function(){
 							$(".chat-"+key).find(".chatNewPost").addClass("noNewPost");
 							$(".chat-"+key).find(".chatNewPost").removeClass("chatNewPost");
 						}
+						if(blnStartupDone) playNewSound();
 					}
 				});
 			}
@@ -231,7 +234,7 @@ var EQdkpChat = new function(){
 					var usercount = $(".chat-"+key).attr("data-user-count");
 					
 					if(usercount =="2" && $(".chatLastMessageByMe-"+key).html() == "1"){
-						$(".chatMessages-"+key).append('<div class="chatReed"><i class="fa fa-check"></i> Read</div>');
+						$(".chatMessages-"+key).append('<div class="chatReed"><i class="fa fa-check"></i> '+arrOptions.lang_read+'</div>');
 						$(".chat-"+key+" .chatWindowContent").scrollTop($(".chat-"+key+" .chatWindowContent")[0].scrollHeight);
 					}
 				});
@@ -245,6 +248,7 @@ var EQdkpChat = new function(){
 						var unread = addMessages(key, data, 1);
 						blinkHeader(key);
 						blinkTitle();
+						if(blnStartupDone) playNewSound();
 						bindActions();
 					});
 					markWindowAsUnread(key);
@@ -457,7 +461,8 @@ var EQdkpChat = new function(){
 					}
 				});
 			})
-			bindActions();	
+			bindActions();
+			blnStartupDone = true;
 		});
 	}
 	
@@ -522,5 +527,12 @@ var EQdkpChat = new function(){
 	function maximizeConversation(key){
 		$(".chat-"+key).removeClass('chatMinimized');
 		$.get(mmocms_root_path+ "plugins/chat/ajax.php"+mmocms_sid+"&maxConversation&key="+key);
+	}
+	
+	function playNewSound(){
+		if(!arrOptions.play_sounds) return;
+		
+		var audio = new Audio(mmocms_root_path+ "plugins/chat/includes/sounds/sound_1.mp3");
+		audio.play();
 	}
 };

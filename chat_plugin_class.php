@@ -32,7 +32,7 @@ if (!defined('EQDKP_INC'))
 class chat extends plugin_generic
 {
 
-  public $version    = '0.3.1';
+  public $version    = '0.3.2';
   public $build      = '';
   public $copyright  = 'GodMod';
   
@@ -112,6 +112,8 @@ class chat extends plugin_generic
     // define installation
     for ($i = 1; $i <= count($chatSQL['install']); $i++)
       $this->add_sql(SQL_INSTALL, $chatSQL['install'][$i]);
+    
+    $this->config->set('new_message_sound', 1, 'chat');
   }
 
   /**

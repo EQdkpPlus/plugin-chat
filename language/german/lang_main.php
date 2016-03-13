@@ -47,6 +47,9 @@ $lang = array(
 	'chat_f_reload_onlinelist' => 'Reloadzeit Onlineliste',
 	'chat_f_help_reload_onlinelist'	=> 'In Minuten',
 	'chat_mod_pub'			=> 'Moderator des öffentlichen Chats',
+	'chat_read'				=> 'Gelesen',
+	'chat_fs_sounds'		=> 'Sounds',
+	'chat_f_new_message_sound' => 'Neue Nachricht',
  );
 
 ?>

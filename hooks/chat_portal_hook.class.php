@@ -51,7 +51,7 @@ if (!class_exists('chat_portal_hook'))
 			//In Minutes
 			$intReloadOnlineList = ($this->config->get('reload_onlinelist', 'chat')) ? $this->config->get('reload_onlinelist', 'chat') : 5;
 			
-			$this->tpl->add_js("EQdkpChat.init(".$intReloadTime.", ".$intReloadOnlineList.", ".(($this->user->check_auth('u_chat_mod_pub', false)) ? 1 : 0).");
+			$this->tpl->add_js("EQdkpChat.init(".$intReloadTime.", ".$intReloadOnlineList.",".json_encode(array('isModerator' => (($this->user->check_auth('u_chat_mod_pub', false)) ? 1 : 0), 'lang_read' => $this->user->lang('chat_read'), 'play_sounds' => ($this->config->get('new_message_sound', 'chat') ? 1 : 0))).");
 				$('.chat-tooltip-trigger').on('click', function(event){
 					$('#chat-tooltip').show('fast');
 					$('.chatTooltipRemove').remove();
