@@ -72,7 +72,7 @@ var EQdkpChat = new function(){
 	this.init = function (intReloadTime, intRelodOnlinelist, options) {	
 		loadOnlineList();
 		loadOpenConversations();
-		$(document).ready(function(){
+		$(function(){
 			check_new_interval = window.setInterval("EQdkpChat.checkNew()", 1000*intReloadTime); //Seconds
 			onlinelist_interval = window.setInterval("EQdkpChat.loadOnlineList()", 1000*60*intRelodOnlinelist); //Minutes
 		})
