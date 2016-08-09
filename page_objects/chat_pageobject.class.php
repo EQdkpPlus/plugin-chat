@@ -97,10 +97,10 @@ class chat_pageobject extends pageobject
                 FROM __sessions s
       			WHERE s.session_user_id != -1
   				AND s.session_current > ?
-                GROUP BY s.session_user_id
                 ORDER BY s.session_current DESC';
   	$result = $this->db->prepare($sql)->execute($this->time->time-600);
   	$intOnlineCount = 0;
+  	$arrDone = array();
   	if ($result)
   	{
   		$intOnlineCount = $result->numRows;
@@ -108,6 +108,8 @@ class chat_pageobject extends pageobject
   		while ($row = $result->fetchAssoc())
   		{
   			$user_id = (int)$row['session_user_id'];
+  			if(in_array($user_id, $arrDone)) continue;
+  			$arrDone[] = $user_id;
   			
   			$html = '<li>';
   			if ($user_id != $this->user->id){
