@@ -79,7 +79,6 @@ if (!class_exists('pdh_r_chat_online'))
                 FROM __sessions s
       			WHERE s.session_user_id != -1
       			AND s.session_current > ?
-                GROUP BY s.session_user_id
                 ORDER BY s.session_current DESC';
       $result = $this->db->prepare($sql)->execute($this->time->time-600);
       if ($result)
@@ -88,6 +87,8 @@ if (!class_exists('pdh_r_chat_online'))
         // add row by row to local copy
         while ($row = $result->fetchAssoc())
         {
+          if(isset( $this->data[(int)$row['session_user_id']])) continue;
+          
           $this->data[(int)$row['session_user_id']] = array(
           		'online'	=> true,
           		'lastvisit' => (int)$row['session_current'],
