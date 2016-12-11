@@ -32,7 +32,7 @@ if (!defined('EQDKP_INC'))
 class chat extends plugin_generic
 {
 
-  public $version    = '0.3.3';
+  public $version    = '0.4.0';
   public $build      = '';
   public $copyright  = 'GodMod';
   
@@ -58,12 +58,12 @@ class chat extends plugin_generic
       'long_description'  => $this->user->lang('chat_long_desc'),
       'homepage'          => EQDKP_PROJECT_URL,
       'manuallink'        => false,
-      'plus_version'      => '2.0',
+      'plus_version'      => '2.3',
       'build'             => $this->build,
     ));
 
     $this->add_dependency(array(
-      'plus_version'      => '2.0'
+      'plus_version'      => '2.3'
     ));
 
     // -- Register our permissions ------------------------
