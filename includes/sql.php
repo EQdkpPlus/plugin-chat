@@ -38,6 +38,7 @@ $chatSQL = array(
 	  `conversation_key` varchar(50) NOT NULL DEFAULT '',
 	  `user` TEXT COLLATE utf8_bin,
 	  `title` varchar(255) NOT NULL,
+	  `minimized` TINYINT(1) NOT NULL DEFAULT '0',
 	  PRIMARY KEY (`id`)
 	) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ",
