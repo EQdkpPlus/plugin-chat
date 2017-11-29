@@ -140,6 +140,9 @@ class chat_pageobject extends pageobject
       'page_title'    => $this->user->lang('chat_guildchat'),
       'template_path' => $this->pm->get_data('chat', 'template_path'),
       'template_file' => 'chat.html',
+    		'page_path'			=> [
+    				['title'=>$this->user->lang('chat'), 'url'=>' '],
+    		],
       'display'       => true
     ));
 

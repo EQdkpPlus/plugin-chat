@@ -92,7 +92,7 @@
 var chatMorePosts = {CHAT_MORE_POSTS};
 var chatOffset = 0;
 
-$(document).ready(function(){
+$(function(){
 	$(".chatBigContainer .chatWindowContent").scrollTop($(".chatBigContainer .chatWindowContent")[0].scrollHeight);
 	
 	$(".chatBigContainer .chatWindowContent").on("scroll", function() {
@@ -114,15 +114,6 @@ $(document).ready(function(){
 	})
 })
 </script>
-
-<div class="breadcrumb-container">
-	<ul class="breamcrumb">
-		<li><a href="{EQDKP_CONTROLLER_PATH}{SID}" title="{L_home}"><i class="fa fa-home"></i></a></li>
-		<li class="current"><a href="{EQDKP_CONTROLLER_PATH}Chat{SEO_EXTENSION}{SID}">{L_chat}</a></li>
-		<li class="current"><a>{CHAT_TITLE}</a></li>
-	</ul>
-	<div class="clear"></div>
-</div>
 
 <div class="grid">
 	<div class="onerow">

@@ -176,6 +176,11 @@ class chathistory_pageobject extends pageobject
       'page_title'    => $this->user->lang('chat_conversation'),
       'template_path' => $this->pm->get_data('chat', 'template_path'),
       'template_file' => 'chathistory.html',
+    		'page_path'			=> [
+    				['title'=>$this->user->lang('chat'), 'url'=> $this->routing->build('chat')],
+    				['title'=>(strlen($strChatTitle)) ? $strChatTitle : " - ", 'url'=> ' '],
+    				
+    		],
       'display'       => true
     ));
 
