@@ -103,13 +103,14 @@ class chat_pageobject extends pageobject
   	$arrDone = array();
   	if ($result)
   	{
-  		$intOnlineCount = $result->numRows;
   		// add row by row to local copy
   		while ($row = $result->fetchAssoc())
   		{
   			$user_id = (int)$row['session_user_id'];
   			if(in_array($user_id, $arrDone)) continue;
   			$arrDone[] = $user_id;
+  			
+  			$intOnlineCount++;
   			
   			$html = '<li>';
   			if ($user_id != $this->user->id){
