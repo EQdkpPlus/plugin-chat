@@ -32,7 +32,7 @@ if (!defined('EQDKP_INC'))
 class chat extends plugin_generic
 {
 
-  public $version    = '0.4.2';
+  public $version    = '0.4.3';
   public $build      = '';
   public $copyright  = 'GodMod';
   
@@ -87,6 +87,7 @@ class chat extends plugin_generic
 	$this->add_pdh_write_module('chat_conversation_lastvisit');
 	
 	$this->add_hook('portal', 'chat_portal_hook', 'portal');
+	$this->add_hook('user_delete', 'chat_user_delete_hook', 'user_delete');
 	    
     //Routing
 	$this->routing->addRoute('Chat', 'chat', 'plugins/chat/page_objects');
