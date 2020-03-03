@@ -71,7 +71,6 @@
 .chatWindowHeader span, .chatWindowHeaderInactive span {
 	display: block;
     float: left;
-    width: 175px;
     overflow: hidden;
 }
 
@@ -199,7 +198,7 @@
 	float: none;
 }
 
-.chatWindowContent .chatPost.mine .chatAvatar img {
+.chatWindowContent .chatPost.mine .chatAvatar img, .chatWindowContent .chatPost.mine .eqdkp-icon-online, .chatWindowContent .chatPost.mine .eqdkp-icon-offline {
 	display: none;
 }
 
@@ -544,4 +543,15 @@ div.token-input-dropdown-facebook ul li.token-input-selected-dropdown-item-faceb
 
 .chatReed {
 	color: black;
+}
+
+.chat_user_avatar .user-avatar-container {
+	float: left;
+}
+
+.chatAvatar .user-avatar, .chat_user_avatar .user-avatar {
+	max-height: 24px !important;
+}
+.chatAvatar .eqdkp-icon-online, .chat_user_avatar .eqdkp-icon-online {
+	display: none;
 }
