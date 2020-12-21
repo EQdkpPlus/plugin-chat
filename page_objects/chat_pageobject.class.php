@@ -56,8 +56,9 @@ class chat_pageobject extends pageobject
 			$rows = $objQuery->numRows;
 			
 			$arrUser = $this->pdh->get("chat_conversations", "user", array($firstKey));
+
 			$lastvisit = false;
-			if (count($arrUser) > 2){
+			if (is_array($arrUser) && count($arrUser) > 2){
 				$lastvisit = $this->pdh->get("chat_conversation_lastvisit", "lastVisit", array($this->user->id, $firstKey));
 			}
 				
